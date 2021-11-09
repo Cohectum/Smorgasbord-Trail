@@ -1,0 +1,39 @@
+*{
+    list-style: none;
+}
+
+#wrapper{
+    margin: auto;
+    padding: auto;
+    display: flex;
+    width: 60%;
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+ul{
+    text-align: left;
+}
+
+li{
+    position: relative;
+}
+
+li:hover{
+    background-color: #bebebe;
+}
+
+a{
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+
+a:hover{
+    color: #000;
+}
