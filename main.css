@@ -4,26 +4,26 @@
 
 #wrapper{
     margin: auto;
-    padding: auto;
+    margin-top: 30px;
     display: flex;
     width: 60%;
     text-align: center;
 }
 
-a{
+#sidebarList li a{
     text-decoration: none;
     color: black;
 }
 
-ul{
+#sidebarBox ul{
     text-align: left;
 }
 
-li{
+#sidebarList li{
     position: relative;
 }
 
-li:hover{
+#sidebarList li:hover{
     background-color: #bebebe;
 }
 
@@ -36,4 +36,18 @@ a{
 
 a:hover{
     color: #000;
+}
+
+#createList li{
+    text-align: left;
+    vertical-align: middle;
+}
+
+#createList li label{
+    margin: 10px;
+    width: 100px;
+}
+
+#createList li textarea{
+    vertical-align: middle;
 }
