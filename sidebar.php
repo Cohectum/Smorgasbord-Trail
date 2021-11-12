@@ -8,6 +8,7 @@
                     <li><a href="./index.php">Home</a></li>
                     <li><a href="./search.php">Search</a></li>
                     <li><a href="./categories.php">Categories</a></li>
+                    <li><a href="./postList.php?all">All Posts</a></li>
                     <hr>
                     <li><a href="./editProfile.php">Your Profile</a></li>
                     <li><a href="./login.php">Log In</a></li>

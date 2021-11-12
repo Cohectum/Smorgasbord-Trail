@@ -2,10 +2,15 @@
     list-style: none;
 }
 
+body{
+    background-color: slategrey;
+}
+
 #wrapper{
     margin: auto;
     margin-top: 30px;
     display: flex;
+    background-color: white;
     width: 60%;
     text-align: center;
 }
@@ -28,9 +33,11 @@
 }
 
 a{
+    text-decoration: none;
     position: relative;
     margin: 0;
     padding: 0;
+    color: #000;
 }
 
 
@@ -40,14 +47,74 @@ a:hover{
 
 #createList li{
     text-align: left;
-    vertical-align: middle;
 }
 
 #createList li label{
     margin: 10px;
-    width: 100px;
+    width: 150px;
 }
 
 #createList li textarea{
     vertical-align: middle;
+}
+
+h3#error_message{
+    color: red;
+}
+
+#category_list{
+    margin: auto;
+    padding: auto;
+}
+
+#category_list li:first-of-type{
+    margin-top: 40px;
+}
+
+#category_list li:last-of-type{
+    margin-bottom: 40px;
+}
+
+#category_list li{
+    width: 100%;
+    margin: 2px;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+#category_list li:hover{
+    background-color: slategrey;
+}
+
+#category_list li a{
+    text-decoration: none;
+    color: black;
+}
+
+#post_list{
+    width: 100%;
+    text-align: left;
+}
+
+.post_overview{
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #000;
+    border-radius: 3px;
+}
+
+.post_overview:hover{
+    background-color: slategrey;
+    transition: background-color 0.2s linear;
+}
+
+.post_overview img{
+    width: 90px;
+    height: 90px;
+    margin: 5px;
+}
+
+.post_information{
+    margin-left: 15px;
 }
