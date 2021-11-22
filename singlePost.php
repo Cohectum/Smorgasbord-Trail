@@ -32,7 +32,7 @@
                 <h1>
                     <?= $item['Title'] ?>
                 </h1>
-                <?php if(isset($item['image'])): ?>
+                <?php if(isset($item['Image'])): ?>
                     <img src="<?= str_replace("Base", "Post", ".".substr($item['Image'], strpos($item['Image'], "images") - 1)) ?>">
                 <?php endif ?>
                 <hr>

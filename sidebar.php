@@ -10,7 +10,7 @@
                     <li><a href="./categories.php">Categories</a></li>
                     <li><a href="./postList.php?all">All Posts</a></li>
                     <hr>
-                    <li><a href="./editProfile.php">Your Profile</a></li>
+                    <li><a href="./viewUser.php">Your Profile</a></li>
                     <li><a href="./login.php">Log In</a></li>
                     <li><a href="./register.php">Register</a></li>
                     <li><a href="./createPost.php">Post</a></li>
