@@ -52,7 +52,8 @@
 
                 $user = $statement->fetch();
     
-                if (is_array($user)) {
+                if ($statement->rowcount() == 1) {
+                    //7.3 Password Is Hashed and Salted
                     if (password_verify($password, $user['Password'])) {
                         $_SESSION['userId'] = $user['UserId'];
                         $_SESSION['title'] = $user['Title'];

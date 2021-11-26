@@ -25,9 +25,9 @@
                         endif;
                         if (isset($_SESSION['title'])):
                         if ($_SESSION['title'] == "Admin"):?>
-                        <li><a href="./ModerateComments.php">Moderate comments:</a></li>
-                        <li><a href="./ModeratePosts.php">Moderate posts:</a></li>
-                        <li><a href="./AdminUserView.php">View All Users:</a></li>
+                        <li><a href="./ModerateComments.php">All Comments</a></li>
+                        <li><a href="./ModeratePosts.php">Moderate Posts</a></li>
+                        <li><a href="./AdminUserView.php">View All Users</a></li>
                     <?php endif; endif?>
                 </ul>
             </nav>

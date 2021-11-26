@@ -35,6 +35,7 @@
             if ($password === $confirmation) {
 
                 $query = "INSERT INTO users (Username, Email, Password) VALUES (:username, :email, :password)";
+                //7.3 Passwords are hashed and salted
                 $values = [":username" => $username, ":email" => $email, ":password" => password_hash($password, PASSWORD_DEFAULT)];
                 $statement = $db->prepare($query);
                 $statement->execute($values);

@@ -9,6 +9,7 @@ body{
 #wrapper{
     margin: auto;
     margin-top: 30px;
+    padding: 15px;
     display: flex;
     background-color: white;
     width: 60%;
@@ -43,6 +44,12 @@ a{
 
 a:hover{
     color: #000;
+}
+
+#index_message{
+    border: 2px solid #90EEBF;
+    border-radius: 5px;
+    background-color: #90EEBF;
 }
 
 #createList li{
@@ -110,8 +117,7 @@ h3#error_message{
 }
 
 .post_overview img{
-    width: 90px;
-    height: 90px;
+    object-fit: scale-down;
     margin: 5px;
 }
 
@@ -159,4 +165,8 @@ ul#registration_form li label{
     width: 50%;
 }
 
+#list_nav{
+    text-align: center;
+    margin: 10px auto;
+}
 

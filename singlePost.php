@@ -21,6 +21,12 @@
     else{
         header('Location: index.php');
     }
+    
+    $userQuery = "SELECT username FROM users WHERE UserId = {$item['UserId']}";
+    $userStatement = $db->prepare($userQuery);
+    $userStatement->execute();
+
+    $poster = $userStatement->fetch();
 
 ?>
 <!DOCTYPE html>
@@ -58,6 +64,7 @@
                 <p>
                     Posted: <?= $item['Created_on'] ?>
                 </p>
+                <p>By: <?= $poster['username'] ?></p>
                 <button>Message Seller</button>
             </div>
         </div>

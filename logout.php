@@ -9,5 +9,5 @@
 
     session_destroy();
 
-    header('Location: LogIn.php');
+    header('Location: Index.php?LogOutSuccess');
 ?>
