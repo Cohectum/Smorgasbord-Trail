@@ -1,12 +1,22 @@
 <?php
+    /*
+     * Author: Cameron Foy
+     * Purpose: Post edit/delete form
+     * Last Updated: 11/21/2021
+     */
 
-    require('authenticate.php');
+    session_start();
+    if(!isset($_SESSION['userId'])){
+        header("Location: LogIn.php");
+    }
     require('DBConnect.php');
     require '\xampp\htdocs\Smorgasbord-Trail\php-image-resize-master\lib\ImageResize.php';
     Require '\xampp\htdocs\Smorgasbord-Trail\php-image-resize-master\lib\ImageResizeException.php';
     use \Gumlet\ImageResize;
 
-    $get = filter_input(INPUT_GET, "id",  FILTER_VALIDATE_INT);
+    // 4.3 SANITIZE GET and 4.2 VALIDATE id
+    $get = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $id = filter_var($get, FILTER_VALIDATE_INT);
 
     if ($_POST) {
         if ($_POST['submit'] == "Update") {
@@ -88,8 +98,6 @@
                 $temporary_path = $_FILES['image']['tmp_name'];
                 $new_path = file_upload_path($filename);
                 $file_suffix = pathinfo($new_path, PATHINFO_EXTENSION);
-    
-                var_dump($new_path);
             
                 //Saves variations of images if image is correct
                 if(is_image($temporary_path, $new_path)){
@@ -108,7 +116,7 @@
                 }
             }
     
-            //Isolating variables
+            //4.3 Sanitize Post
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $title = $post['title'];
             $content = $post['description'];
@@ -159,33 +167,33 @@
                     $updateString = $updateString.($counter = 0 ? "" : ", ")."Price = :price";
                     $counter++;
                 }
-                if ($location != null) {
-                    $updateString = $updateString.($counter = 0 ? "" : ", ")."Location = :location";
-                    $counter++;
-                }
+
+                $updateString = $updateString.($counter = 0 ? "" : ", ")."Location = :location";
+                $counter++;
+
                 if ($file_upload_detected) {
                     $updateString = $updateString.($counter = 0 ? "" : ", ")."Image = :image";
                     $counter++;
                 }
     
-                $queryString = "UPDATE items SET ".$updateString." WHERE ItemId = {$get}";
+                $queryString = "UPDATE items SET ".$updateString." WHERE ItemId = {$id}";
                 $query = $queryString;
                 $statement = $db->prepare($queryString);
     
                 if (isset($post['title'])) {
-                    $statement->bindValue(':title', $title);;
+                    $statement->bindValue(':title', $title);
                 }
                 if (isset($post['description'])) {
-                    $statement->bindValue(':description', $content);;
+                    $statement->bindValue(':description', $content);
                 }
                 if (isset($post['price'])) {
-                    $statement->bindValue(':price', $price);;
+                    $statement->bindValue(':price', $price);
                 }
-                if ($location != null) {
-                    $statement->bindValue(':location', $location);;
-                }
+
+                $statement->bindValue(':location', $location);
+
                 if ($file_upload_detected) {
-                    $statement->bindValue(':image', file_upload_path($_FILES['image']['name']));;
+                    $statement->bindValue(':image', file_upload_path($_FILES['image']['name']));
                 }
     
                 $statement->execute();
@@ -197,7 +205,7 @@
                     $category_statement->execute();
                     $itemId = $category_statement->fetch();
     
-                    $remove_previous_category = "DELETE FROM itemcategories WHERE ItemId = {$get}";
+                    $remove_previous_category = "DELETE FROM itemcategories WHERE ItemId = {$id}";
                     $remove_statement = $db->prepare($remove_previous_category);
                     $remove_statement->execute();
     
@@ -212,12 +220,11 @@
             }
         }
         else if($_POST['submit'] == "Delete"){
-            $get = filter_input(INPUT_GET, "id",  FILTER_VALIDATE_INT);
-            $query = "DELETE FROM items WHERE ItemId = {$get}";
+            $query = "DELETE FROM items WHERE ItemId = {$id}";
             $statement = $db->prepare($query);
             $statement->execute();
     
-            $categoryQuery = "DELETE FROM itemcategories WHERE ItemId = {$get}";
+            $categoryQuery = "DELETE FROM itemcategories WHERE ItemId = {$id}";
             $categorystatement = $db->prepare($categoryQuery);
             $categorystatement->execute();
     
@@ -229,17 +236,18 @@
     if(isset($_GET['id']) && filter_var($_GET['id'], FILTER_VALIDATE_INT)){
         
 
-        $query = "SELECT * FROM items WHERE ItemId = {$get}";
+        $query = "SELECT * FROM items WHERE ItemId = {$id}";
         $statement = $db->prepare($query);
         $statement->execute();
-
         $item = $statement->fetch();
 
-        $categoryquery = "SELECT CategoryId FROM itemcategories WHERE ItemId = {$get}";
+        if ($statement->rowCount() == 0) {
+            header('Location: index.php?404');
+        }
 
+        $categoryquery = "SELECT CategoryId FROM itemcategories WHERE ItemId = {$id}";
         $categorystatement = $db->prepare($categoryquery);
         $categorystatement->execute();
-
         $itemCategory = $categorystatement->fetch();
 
         $query = "SELECT * FROM categories ORDER BY Category_Name";
@@ -247,8 +255,9 @@
         $statement->execute();
     }
     else{
-        //header('Location: index.php');
+        header('Location: index.php?404');
     }
+
 
     
     
@@ -263,7 +272,7 @@
     <body>
         <div id="wrapper">
             <?php include('sidebar.php') ?>
-            <form action="editPost.php?id=<?= $get ?>" method="post" enctype='multipart/form-data'>
+            <form action="editPost.php?id=<?= $id ?>" method="post" enctype='multipart/form-data'>
                 <?php if($_POST): ?>
                     <?php if($success_flag): ?>
                         <li><h1>Your Edits were successful, post updated.</h1></li>
@@ -313,9 +322,9 @@
                         <input type="text" id="location" name="location" placeholder="Ex: 555 Sample St, Winnipeg" value="<?= $item['Location'] ?>">
                     </li>
                     <li>
-                        <label for="location_toggle">Hide Location:</label>
+                        <label for="check">Hide Location:</label>
                         <?php if($item['Location'] == null): ?>
-                            <input cheched type="checkbox" id="check" name="check" value="hideLocation">
+                            <input type="checkbox" id="check" name="check" value="hideLocation" checked>
                         <?php else: ?>
                             <input type="checkbox" id="check" name="check" value="hideLocation">
                         <?php endif ?>

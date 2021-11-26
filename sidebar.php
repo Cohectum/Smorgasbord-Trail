@@ -1,3 +1,6 @@
+<?php
+    $loggedin = isset($_SESSION['userId']);
+?>
 <!DOCTYPE html>
 <html>
     <body>
@@ -10,11 +13,22 @@
                     <li><a href="./categories.php">Categories</a></li>
                     <li><a href="./postList.php?all">All Posts</a></li>
                     <hr>
-                    <li><a href="./viewUser.php">Your Profile</a></li>
-                    <li><a href="./login.php">Log In</a></li>
-                    <li><a href="./register.php">Register</a></li>
-                    <li><a href="./createPost.php">Post</a></li>
-                    <li><a href="./messages.php">Messages</a></li>
+                    <?php if(!$loggedin): ?>
+                        <li><a href="./login.php">Log In</a></li>
+                        <li><a href="./register.php">Register</a></li>
+                    <?php else: ?>
+                        <li><a href="./viewUser.php">Your Profile</a></li>
+                        <li><a href="./createPost.php">Post</a></li>
+                        <li><a href="./messages.php">Messages</a></li>
+                        <li><a href="./logout.php">Logout</a></li>
+                    <?php 
+                        endif;
+                        if (isset($_SESSION['title'])):
+                        if ($_SESSION['title'] == "Admin"):?>
+                        <li><a href="./ModerateComments.php">Moderate comments:</a></li>
+                        <li><a href="./ModeratePosts.php">Moderate posts:</a></li>
+                        <li><a href="./AdminUserView.php">View All Users:</a></li>
+                    <?php endif; endif?>
                 </ul>
             </nav>
         </div>

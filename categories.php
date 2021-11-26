@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require('DBConnect.php');
 
     $query = "SELECT * FROM Categories ORDER BY Category_Name";

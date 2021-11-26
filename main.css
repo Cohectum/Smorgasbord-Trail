@@ -118,3 +118,45 @@ h3#error_message{
 .post_information{
     margin-left: 15px;
 }
+
+div#login_box{
+    margin: auto;
+    height: 100%;
+    text-align: center;
+}
+
+ul#login_form{
+    text-align: left;
+}
+
+ul#login_form li label{
+    margin: 10px;
+    width: 100px;
+}
+
+li#login_button_box{
+    display: flex;
+}
+
+#login_button_box input{
+    flex: 1;
+}
+
+ul#registration_form{
+    text-align: left;
+}
+
+ul#registration_form li label{
+    margin: 10px;
+    width: 150px;
+}
+
+#button_box{
+    text-align: center;
+}
+
+#registration_button{
+    width: 50%;
+}
+
+

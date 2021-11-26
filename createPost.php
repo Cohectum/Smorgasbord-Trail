@@ -1,6 +1,13 @@
 <?php
-
-    require('authenticate.php');
+    /*
+     * Author: Cameron Foy
+     * Purpose: Post creation form
+     * Last Updated: 11/21/2021
+     */
+    session_start();
+    if(!isset($_SESSION['userId'])){
+        header("Location: LogIn.php");
+    }
     require('DBConnect.php');
     require '\xampp\htdocs\Smorgasbord-Trail\php-image-resize-master\lib\ImageResize.php';
     Require '\xampp\htdocs\Smorgasbord-Trail\php-image-resize-master\lib\ImageResizeException.php';
@@ -111,6 +118,7 @@
             $error_flag = true;
         }
 
+        //4.3 sanitized POST
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $title = $post['title'];
@@ -147,7 +155,7 @@
         
                 $statement = $db->prepare($query);
         
-                $statement->bindvalue(':userid', 2);
+                $statement->bindvalue(':userid', $_SESSION['userId']);
                 $statement->bindvalue(':title', $title);
                 $statement->bindvalue(':description', $content);
                 $statement->bindvalue(':price', $price);

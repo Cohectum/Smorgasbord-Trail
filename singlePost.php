@@ -1,7 +1,14 @@
 <?php
+    /*
+     * Author: Cameron Foy
+     * Purpose: Displays single post in user view.
+     * Last Updated: 11/20/2021
+     */
+
 
     require('DBConnect.php');
 
+    //4.3 Sanitized GET and 4.2 Sanitized IDs
     if(isset($_GET['id']) && filter_var($_GET['id'], FILTER_VALIDATE_INT)){
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
