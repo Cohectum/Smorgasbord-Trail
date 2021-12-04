@@ -20,7 +20,7 @@
         <div id='wrapper'>
             <?php include('sidebar.php') ?>
             <ul id="category_list">
-                <?php while($category = $statement->fetch()):  //<?= preg_replace("/ /", "-", $category[1]) ?>
+                <?php while ($category = $statement->fetch()):  //<?= preg_replace("/ /", "-", $category[1])?>
                     <li> 
                         <a href="/Smorgasbord-Trail/postList.php?Category=<?= $category[0] ?>"><?= $category[1]?></a>
                     </li>

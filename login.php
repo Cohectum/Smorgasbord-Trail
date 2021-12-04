@@ -14,36 +14,33 @@
 
     //If a button is clicked
     if (isset($post['submit'])) {
-        
+
         //Send user to registration
         if ($post['submit'] == "Register") {
             header("Location: Register.php");
         }
-    
+
         //Attempt user Login
         if ($post['submit'] == "Log In") {
-
             $username = $post['username'];
             $password = $post['password'];
 
-            if (empty($username) || 
+            if (empty($username) ||
                 empty($password) ||
                 ctype_space($username) ||
                 ctype_space($password)) {
-                
                 $error_flag = true;
                 $error_message = "Please Enter a Username and Password";
             }
 
             $query = "SELECT * FROM users WHERE Username = :username";
             $values = [":username" => $username];
-    
+
             if (!$error_flag) {
-                try{
+                try {
                     $statement = $db->prepare($query);
                     $statement->execute($values);
-                } 
-                catch (PDOException $e){
+                } catch (PDOException $e) {
                     $error_flag = true;
                     $error_message = "Error Fetching account.";
                     echo "Error Fetching account.";
@@ -51,20 +48,18 @@
                 }
 
                 $user = $statement->fetch();
-    
+
                 if ($statement->rowcount() == 1) {
                     //7.3 Password Is Hashed and Salted
                     if (password_verify($password, $user['Password'])) {
                         $_SESSION['userId'] = $user['UserId'];
                         $_SESSION['title'] = $user['Title'];
                         header("Location: index.php?LoginSuccess");
-                    }
-                    else{
+                    } else {
                         $error_flag = true;
                         $error_message = "Your Username or Password is incorrect";
                     }
-                }
-                else{
+                } else {
                     $error_flag = true;
                     $error_message = "Your Username or Password is incorrect";
                 }
@@ -83,7 +78,7 @@
         <div id="wrapper">
             <?php include("sidebar.php") ?>
             <div id="login_box">
-                <?php if($error_flag): ?>
+                <?php if ($error_flag): ?>
                         <h3 id="error_message"><?= $error_message ?></h3>
                 <?php endif ?>
                 <h1>Log In</h1>

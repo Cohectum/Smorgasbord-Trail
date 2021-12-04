@@ -1,12 +1,11 @@
 <?php
 
-use \Gumlet\ImageResize;
-use \Gumlet\ImageResizeException;
-use \PHPUnit\Framework\TestCase;
+use Gumlet\ImageResize;
+use Gumlet\ImageResizeException;
+use PHPUnit\Framework\TestCase;
 
 class ImageResizeTest extends TestCase
 {
-
     private $image_types = array(
         'gif',
         'jpeg',
@@ -77,10 +76,10 @@ class ImageResizeTest extends TestCase
 
     public function testLoadRfc2397()
     {
-      $resize = new ImageResize($this->data_url);
+        $resize = new ImageResize($this->data_url);
 
-      $this->assertEquals(IMAGETYPE_GIF, $resize->source_type);
-      $this->assertInstanceOf('\Gumlet\ImageResize', $resize);
+        $this->assertEquals(IMAGETYPE_GIF, $resize->source_type);
+        $this->assertInstanceOf('\Gumlet\ImageResize', $resize);
     }
 
     public function testAddFilter()
@@ -303,7 +302,7 @@ class ImageResizeTest extends TestCase
         $image = $this->createImage(200, 100, 'png');
         $resize = new ImageResize($image);
 
-        $resize->freecrop(50, 50 , $x = 20, $y = 20);
+        $resize->freecrop(50, 50, $x = 20, $y = 20);
 
         $this->assertEquals(50, $resize->getDestWidth());
         $this->assertEquals(50, $resize->getDestHeight());
@@ -541,5 +540,4 @@ class ImageResizeTest extends TestCase
     {
         return tempnam(sys_get_temp_dir(), 'resize_test_image');
     }
-
 }

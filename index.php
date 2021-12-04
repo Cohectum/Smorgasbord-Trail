@@ -7,12 +7,10 @@
     if (isset($_GET['LoginSuccess'])) {
         $message_flag = true;
         $message = "You have successfully logged in!";
-    }
-    else if(isset($_GET['LogOutSuccess'])){
+    } elseif (isset($_GET['LogOutSuccess'])) {
         $message_flag = true;
         $message = "You have successfully logged out";
-    }
-    else if(isset($_GET['Registered'])){
+    } elseif (isset($_GET['Registered'])) {
         $message_flag = true;
         $message = "You have successfully Registered, You may now log in!";
     }
@@ -30,7 +28,7 @@
             <?php include("sidebar.php") ?>
             <h2>Welcome to Smorgasbord Trail!</h2>
             <div class="split-text">
-                <?php if($message_flag): ?>
+                <?php if ($message_flag): ?>
                     <div id="index_message"> <h3><?= $message ?></h3> </div>
                 <?php endif ?>
                 <p>Smorgasbord Trail is a website to buy and sell retro technology. A place for collectors and enthusiasts to come together to save these gems from landfills!</p>

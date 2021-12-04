@@ -5,18 +5,19 @@
      * Last Updated: 11/21/2021
      */
     session_start();
-    if(!isset($_SESSION['userId'])){
+    if (!isset($_SESSION['userId'])) {
         header("Location: LogIn.php");
     }
     require('DBConnect.php');
     require '\xampp\htdocs\Smorgasbord-Trail\php-image-resize-master\lib\ImageResize.php';
-    Require '\xampp\htdocs\Smorgasbord-Trail\php-image-resize-master\lib\ImageResizeException.php';
-    use \Gumlet\ImageResize;
+    require '\xampp\htdocs\Smorgasbord-Trail\php-image-resize-master\lib\ImageResizeException.php';
+    use Gumlet\ImageResize;
+
+    var_dump($_FILES['image']);
 
 
 
     if ($_POST) {
-
         $error_message = null;
         $error_flag = false;
         $image_path = "";
@@ -28,34 +29,34 @@
          *     modifier_index(0): The index of the extension for resized images, (1 for medium, 2 for thumbnail)
          *     subfolder_name('uploads'): Easily changable subfolder name
          * }
-         * 
+         *
          * RETURNS{
          *     (STRING)the new file upload path
-         * } 
+         * }
         */
-        function file_upload_path($filename, $file_suffix = '', $modifier_index = 0, $subfolder_name = 'images'){
+        function file_upload_path($filename, $file_suffix = '', $modifier_index = 0, $subfolder_name = 'images')
+        {
             $folder = dirname(__FILE__);
             $full_file_suffix = substr(basename($filename), strrpos(basename($filename), '.'));
 
             //Creates Subfolder if it does not exist
-            if(!file_exists($folder.DIRECTORY_SEPARATOR.$subfolder_name)){
+            if (!file_exists($folder.DIRECTORY_SEPARATOR.$subfolder_name)) {
                 mkdir($folder.DIRECTORY_SEPARATOR.$subfolder_name);
             }
 
-            if(!file_exists($folder.DIRECTORY_SEPARATOR.$subfolder_name.DIRECTORY_SEPARATOR.basename($filename, $full_file_suffix))){
+            if (!file_exists($folder.DIRECTORY_SEPARATOR.$subfolder_name.DIRECTORY_SEPARATOR.basename($filename, $full_file_suffix))) {
                 mkdir($folder.DIRECTORY_SEPARATOR.$subfolder_name.DIRECTORY_SEPARATOR.basename($filename, $full_file_suffix));
             }
 
             $image_path = $folder.DIRECTORY_SEPARATOR.$subfolder_name.DIRECTORY_SEPARATOR.basename($filename, $full_file_suffix);
 
-            if($modifier_index > 0){
+            if ($modifier_index > 0) {
                 $modifiers = ['', 'Post', 'Thumbnail'];
                 $path = [$folder, $subfolder_name, basename($filename, $full_file_suffix), $modifiers[$modifier_index].$full_file_suffix];
-            }
-            else{
+            } else {
                 $path = [$folder, $subfolder_name, basename($filename, $full_file_suffix), "Base".$full_file_suffix];
             }
-            
+
             return join(DIRECTORY_SEPARATOR, $path);
         }
 
@@ -64,38 +65,41 @@
          *    temp_path: The temporary path of the uploaded file
          *    new_path: The new file upload path
          * }
-         * 
+         *
          * RETURNS{
          *     (BOOL)True if the file is an image of specified types
-         * } 
+         * }
          */
-        function is_image($temp_path, $new_path){
+        function is_image($temp_path, $new_path)
+        {
             $allowed_mime_type = ['image/gif', 'image/jpeg', 'image/png'];
             $allowed_file_extensions = ['gif', 'jpg', 'jpeg', 'png'];
-            
+
             $actual_file_extension = pathinfo($new_path, PATHINFO_EXTENSION);
             $actual_mime_type = $_FILES['image']['type'];
-    
+
             $extension_is_valid = in_array($actual_file_extension, $allowed_file_extensions);
             $mime_is_valid = in_array($actual_mime_type, $allowed_mime_type);
-    
-            return $extension_is_valid AND $mime_is_valid;
+
+            return $extension_is_valid and $mime_is_valid;
         }
 
         $file_upload_detected = isset($_FILES['image']) && ($_FILES['image']['error'] === 0);
-        $upload_error_detected = isset($_FILES['image']) && ($_FILES['image']['error'] > 0);
 
-        if($file_upload_detected){
+        $image = null;
+
+        if ($file_upload_detected) {
             $filename = $_FILES['image']['name'];
             $temporary_path = $_FILES['image']['tmp_name'];
             $new_path = file_upload_path($filename);
             $file_suffix = pathinfo($new_path, PATHINFO_EXTENSION);
+            $image = $new_path;
 
             var_dump($new_path);
-        
-            if(is_image($temporary_path, $new_path)){
+
+            if (is_image($temporary_path, $new_path)) {
                 move_uploaded_file($temporary_path, $new_path);
-                
+
                 try {
                     $resize = new ImageResize($new_path);
                     $resize->resizeToLongSide(400);
@@ -107,15 +111,10 @@
                     $error_flag = true;
                 }
             }
-        }
-        else{
-            $error_message = "No File Uploaded";
-            $error_flag = true;
-        }
-
-        if($upload_error_detected){
-            $error_message = "There was an error while uploading your photo, please try again";
-            $error_flag = true;
+            else{
+                $error_flag = true;
+                $error_message = "Uploaded file was not an image(jpg, png, gif)";
+            }
         }
 
         //4.3 sanitized POST
@@ -124,64 +123,62 @@
         $title = $post['title'];
         $content = $post['description'];
         $price = $post['price'];
-        
-        if(!isset($post['check'])){
+
+        if (!isset($post['check'])) {
             $location = $post['location'];
-        }
-        else{
+        } else {
             $location = null;
         }
 
 
-        if(!filter_var($price, FILTER_VALIDATE_FLOAT)){
+        if (!filter_var($price, FILTER_VALIDATE_FLOAT)) {
             preg_replace("/[^0-9.]/", "", $price);
-            if(!filter_var($price, FILTER_VALIDATE_FLOAT)){
+            if (!filter_var($price, FILTER_VALIDATE_FLOAT)) {
                 $error_flag = true;
                 $error_message = "Price is Invalid";
             }
         }
 
-        if (empty($title) || 
+        if (empty($title) ||
             empty($content) ||
             ctype_space($title) ||
             ctype_space($content)) {
-            
             $error_flag = true;
             $error_message = "Title and Description must have at least one character.";
         }
 
-        if(!$error_flag){
-                $query = "INSERT INTO items (UserId, Title, Description, Price, Location, Image) VALUES (:userid, :title, :description, :price, :location, :image)";
-        
-                $statement = $db->prepare($query);
-        
-                $statement->bindvalue(':userid', $_SESSION['userId']);
-                $statement->bindvalue(':title', $title);
-                $statement->bindvalue(':description', $content);
-                $statement->bindvalue(':price', $price);
-                $statement->bindvalue(':location', $location);
-                $statement->bindvalue(':image', $new_path);
+        if (!$error_flag) {
+            $query = "INSERT INTO items (UserId, Title, Description, Price, Location, Image) VALUES (:userid, :title, :description, :price, :location, :image)";
 
-                $statement->execute();
+            $statement = $db->prepare($query);
 
-                if(isset($post['category'])){
-                    $category_query = "SELECT ItemId FROM items WHERE Created_on IN (SELECT MAX(Created_on) FROM items)";
-                    $category_statement = $db->prepare($category_query);
-                    $category_statement->execute();
+            $statement->bindvalue(':userid', $_SESSION['userId']);
+            $statement->bindvalue(':title', $title);
+            $statement->bindvalue(':description', $content);
+            $statement->bindvalue(':price', $price);
+            $statement->bindvalue(':location', $location);
+            $statement->bindvalue(':image', $image);
 
-                    $itemId = $category_statement->fetch();
+            $statement->execute();
 
-                    $item_category_query = "INSERT INTO itemcategories (CategoryId, ItemId) VALUES (:categoryid, :itemid)";
+            if ($post['category'] != "") {
+                $category_query = "SELECT ItemId FROM items WHERE Created_on IN (SELECT MAX(Created_on) FROM items)";
+                $category_statement = $db->prepare($category_query);
+                $category_statement->execute();
 
-                    $item_category_statement = $db->prepare($item_category_query);
+                $itemId = $category_statement->fetch();
 
-                    $item_category_statement->bindvalue(":categoryid", $post['category']);
-                    $item_category_statement->bindvalue(":itemid", $itemId[0]);
+                $item_category_query = "INSERT INTO itemcategories (CategoryId, ItemId) VALUES (:categoryid, :itemid)";
 
-                    $item_category_statement->execute();
-                }
-                
-                header('Location: index.php');
+                $item_category_statement = $db->prepare($item_category_query);
+
+                $item_category_statement->bindvalue(":categoryid", $post['category']);
+                $item_category_statement->bindvalue(":itemid", $itemId[0]);
+
+                $item_category_statement->execute();
+            }
+
+            header('Location: index.php');
         }
     }
 
@@ -201,8 +198,8 @@
             <?php include("sidebar.php")?>
             <form action="createPost.php" enctype='multipart/form-data' method="POST" id="create">
                 <ul id="createList">
-                    <?php if($_POST): ?>
-                        <?php if($error_flag): ?>
+                    <?php if ($_POST): ?>
+                        <?php if ($error_flag): ?>
                             <li><h3 id="error_message"><?= $error_message ?></h3></li>
                         <?php endif ?>
                     <?php endif ?>

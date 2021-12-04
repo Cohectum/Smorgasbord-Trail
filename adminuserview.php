@@ -20,7 +20,7 @@
             <?php include('sidebar.php') ?>
             <div id="user_box">
                 <ul>
-                    <?php while($user = $statement->fetch()): ?>
+                    <?php while ($user = $statement->fetch()): ?>
                         <li id="user_box">
                             <a href="viewUser.php?id=<?=$user['UserId']?>"><h3><?= $user['Username'] ?></h3></a>
                             <p><?= $user['Email'] ?></p>

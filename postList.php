@@ -10,16 +10,14 @@
     $category = '';
 
     if ($isLoggedIn) {
-        if(isset($get['Sort'])) {
-            if($get['Sort'] == "Cheapest"){
+        if (isset($get['Sort'])) {
+            if ($get['Sort'] == "Cheapest") {
                 $orderStatement = "ORDER BY Price ASC";
                 $sort = "Cheapest";
-            }
-            else if($get['Sort'] == "Oldest"){
+            } elseif ($get['Sort'] == "Oldest") {
                 $orderStatement = "ORDER BY Created_on ASC";
                 $sort = "Oldest";
-            }
-            else if($get['Sort'] == "Alphabetical"){
+            } elseif ($get['Sort'] == "Alphabetical") {
                 $orderStatement = "ORDER BY Title ASC";
                 $sort = "Alphabetical";
             }
@@ -32,17 +30,14 @@
         $statement->execute();
 
         $category = $get['Category'];
-    }
-    else if (isset($_GET['all'])){
-
+    } elseif (isset($_GET['all'])) {
         $query = "SELECT * FROM items ".$orderStatement;
         $statement = $db->prepare($query);
         $statement->execute();
-    }
-    else{
+    } else {
         header('Location: PostList.php?all');
     }
-    
+
 
 ?>
 <!DOCTYPE html>
@@ -58,18 +53,18 @@
         <div id='wrapper'>
             <?php include('sidebar.php') ?>
             <ul id="post_list">
-                <?php if($isLoggedIn): ?>
+                <?php if ($isLoggedIn): ?>
                     <div id="list_nav">
-                        <?php if($statement->rowcount() == 0): ?>
+                        <?php if ($statement->rowcount() == 0): ?>
                             <h1>Search Returned No Results.</h1>
-                        <?php elseif(isset($_GET['Category'])): ?>
+                        <?php elseif (isset($_GET['Category'])): ?>
                             <h2>Seach Returned <?= $statement->rowcount() ?> Rows</h2>
                             <a href="./PostList.php?Category=<?= $category ?>"><button>Newest</button></a>
                             <a href="./PostList.php?Category=<?= $category ?>&Sort=Oldest"><button>Oldest</button></a>
                             <a href="./PostList.php?Category=<?= $category ?>&Sort=Cheapest"><button>Cheapest</button></a>
                             <a href="./PostList.php?Category=<?= $category ?>&Sort=Alphabetial"><button>Alphabetical</button></a>
                             <h2>Sorted By: <?= $sort ?></h2>
-                        <?php elseif(isset($_GET['all'])): ?>
+                        <?php elseif (isset($_GET['all'])): ?>
                             <h2>Seach Returned <?= $statement->rowcount() ?> Rows</h2>
                             <a href="./PostList.php?all"><button>Newest</button></a>
                             <a href="./PostList.php?all&Sort=Oldest"><button>Oldest</button></a>
@@ -79,15 +74,17 @@
                         <?php endif ?>    
                     </div>
                 <?php endif; ?>
-                <?php while($post = $statement->fetch()): ?>
+                <?php while ($post = $statement->fetch()): ?>
                     <a href="/Smorgasbord-Trail/SinglePost.php?id=<?= $post['ItemId'] ?>">
                         <div class="post_overview">
-                            <img src="<?= str_replace("Base", "Thumbnail", ".".substr($post['Image'], strpos($post['Image'], "images") - 1)) ?>">
+                            <?php if (isset($post['Image'])): ?>
+                                <img src="<?= str_replace("Base", "Thumbnail", ".".substr($post['Image'], strpos($post['Image'], "images") - 1)) ?>">
+                            <?php endif ?>
                             <div class="post_information">
                                 <h3><?= $post['Title'] ?></h3>
                                 <p>
-                                    <?php 
-                                        if(isset($post['Location'])){
+                                    <?php
+                                        if (isset($post['Location'])) {
                                             echo $post['Location'];
                                         }
                                     ?> 

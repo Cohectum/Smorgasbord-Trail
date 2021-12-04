@@ -9,16 +9,16 @@ use Exception;
  */
 class ImageResize
 {
-    const CROPTOP = 1;
-    const CROPCENTRE = 2;
-    const CROPCENTER = 2;
-    const CROPBOTTOM = 3;
-    const CROPLEFT = 4;
-    const CROPRIGHT = 5;
-    const CROPTOPCENTER = 6;
-    const IMG_FLIP_HORIZONTAL = 0;
-    const IMG_FLIP_VERTICAL = 1;
-    const IMG_FLIP_BOTH = 2;
+    public const CROPTOP = 1;
+    public const CROPCENTRE = 2;
+    public const CROPCENTER = 2;
+    public const CROPBOTTOM = 3;
+    public const CROPLEFT = 4;
+    public const CROPRIGHT = 5;
+    public const CROPTOPCENTER = 6;
+    public const IMG_FLIP_HORIZONTAL = 0;
+    public const IMG_FLIP_VERTICAL = 1;
+    public const IMG_FLIP_BOTH = 2;
 
     public $quality_jpg = 85;
     public $quality_webp = 85;
@@ -118,9 +118,9 @@ class ImageResize
             } else {
                 throw new ImageResizeException('Unsupported file type');
             }
-        } elseif(strstr(finfo_file($finfo, $filename), 'image/webp') !== false) {
-          $checkWebp = true;
-          $this->source_type = IMAGETYPE_WEBP;
+        } elseif (strstr(finfo_file($finfo, $filename), 'image/webp') !== false) {
+            $checkWebp = true;
+            $this->source_type = IMAGETYPE_WEBP;
         }
 
         if (!$image_info = getimagesize($filename, $this->source_info)) {
@@ -203,7 +203,7 @@ class ImageResize
         }
 
         if ($orientation === 5 || $orientation === 4 || $orientation === 7) {
-            if(function_exists('imageflip')) {
+            if (function_exists('imageflip')) {
                 imageflip($img, IMG_FLIP_HORIZONTAL);
             } else {
                 $this->imageFlip($img, IMG_FLIP_HORIZONTAL);
@@ -230,9 +230,9 @@ class ImageResize
 
         switch ($image_type) {
         case IMAGETYPE_GIF:
-            if( !empty($exact_size) && is_array($exact_size) ){
+            if (!empty($exact_size) && is_array($exact_size)) {
                 $dest_image = imagecreatetruecolor($exact_size[0], $exact_size[1]);
-            } else{
+            } else {
                 $dest_image = imagecreatetruecolor($this->getDestWidth(), $this->getDestHeight());
             }
 
@@ -243,11 +243,11 @@ class ImageResize
             break;
 
         case IMAGETYPE_JPEG:
-            if( !empty($exact_size) && is_array($exact_size) ){
+            if (!empty($exact_size) && is_array($exact_size)) {
                 $dest_image = imagecreatetruecolor($exact_size[0], $exact_size[1]);
                 $background = imagecolorallocate($dest_image, 255, 255, 255);
                 imagefilledrectangle($dest_image, 0, 0, $exact_size[0], $exact_size[1], $background);
-            } else{
+            } else {
                 $dest_image = imagecreatetruecolor($this->getDestWidth(), $this->getDestHeight());
                 $background = imagecolorallocate($dest_image, 255, 255, 255);
                 imagefilledrectangle($dest_image, 0, 0, $this->getDestWidth(), $this->getDestHeight(), $background);
@@ -258,32 +258,32 @@ class ImageResize
             if (version_compare(PHP_VERSION, '5.5.0', '<')) {
                 throw new ImageResizeException('For WebP support PHP >= 5.5.0 is required');
             }
-            if( !empty($exact_size) && is_array($exact_size) ){
+            if (!empty($exact_size) && is_array($exact_size)) {
                 $dest_image = imagecreatetruecolor($exact_size[0], $exact_size[1]);
                 $background = imagecolorallocate($dest_image, 255, 255, 255);
                 imagefilledrectangle($dest_image, 0, 0, $exact_size[0], $exact_size[1], $background);
-            } else{
+            } else {
                 $dest_image = imagecreatetruecolor($this->getDestWidth(), $this->getDestHeight());
                 $background = imagecolorallocate($dest_image, 255, 255, 255);
                 imagefilledrectangle($dest_image, 0, 0, $this->getDestWidth(), $this->getDestHeight(), $background);
             }
-                
+
             imagealphablending($dest_image, false);
             imagesavealpha($dest_image, true);
-                
+
             break;
 
         case IMAGETYPE_PNG:
             if (!$this->quality_truecolor || !imageistruecolor($this->source_image)) {
-                if( !empty($exact_size) && is_array($exact_size) ){
+                if (!empty($exact_size) && is_array($exact_size)) {
                     $dest_image = imagecreate($exact_size[0], $exact_size[1]);
-                } else{
+                } else {
                     $dest_image = imagecreate($this->getDestWidth(), $this->getDestHeight());
                 }
             } else {
-                if( !empty($exact_size) && is_array($exact_size) ){
+                if (!empty($exact_size) && is_array($exact_size)) {
                     $dest_image = imagecreatetruecolor($exact_size[0], $exact_size[1]);
-                } else{
+                } else {
                     $dest_image = imagecreatetruecolor($this->getDestWidth(), $this->getDestHeight());
                 }
             }
@@ -303,7 +303,7 @@ class ImageResize
             imagegammacorrect($this->source_image, 2.2, 1.0);
         }
 
-        if( !empty($exact_size) && is_array($exact_size) ) {
+        if (!empty($exact_size) && is_array($exact_size)) {
             if ($this->getSourceHeight() < $this->getSourceWidth()) {
                 $this->dest_x = 0;
                 $this->dest_y = ($exact_size[1] - $this->getDestHeight()) / 2;
@@ -736,12 +736,12 @@ class ImageResize
      */
     public function imageFlip($image, $mode)
     {
-        switch($mode) {
+        switch ($mode) {
             case self::IMG_FLIP_HORIZONTAL: {
                 $max_x = imagesx($image) - 1;
                 $half_x = $max_x / 2;
                 $sy = imagesy($image);
-                $temp_image = imageistruecolor($image)? imagecreatetruecolor(1, $sy): imagecreate(1, $sy);
+                $temp_image = imageistruecolor($image) ? imagecreatetruecolor(1, $sy) : imagecreate(1, $sy);
                 for ($x = 0; $x < $half_x; ++$x) {
                     imagecopy($temp_image, $image, 0, 0, $x, 0, 1, $sy);
                     imagecopy($image, $image, $x, 0, $max_x - $x, 0, 1, $sy);
@@ -753,7 +753,7 @@ class ImageResize
                 $sx = imagesx($image);
                 $max_y = imagesy($image) - 1;
                 $half_y = $max_y / 2;
-                $temp_image = imageistruecolor($image)? imagecreatetruecolor($sx, 1): imagecreate($sx, 1);
+                $temp_image = imageistruecolor($image) ? imagecreatetruecolor($sx, 1) : imagecreate($sx, 1);
                 for ($y = 0; $y < $half_y; ++$y) {
                     imagecopy($temp_image, $image, 0, 0, 0, $y, $sx, 1);
                     imagecopy($image, $image, 0, $y, 0, $max_y - $y, $sx, 1);

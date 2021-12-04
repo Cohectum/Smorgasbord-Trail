@@ -1,13 +1,13 @@
 <?php
+
     session_start();
 
     require('DBConnect.php');
 
-    if(!isset($_SESSION['userId'])){
+    if (!isset($_SESSION['userId'])) {
         header("Location: login.php");
     }
 
     session_destroy();
 
     header('Location: Index.php?LogOutSuccess');
-?>

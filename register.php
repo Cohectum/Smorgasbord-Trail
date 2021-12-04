@@ -2,7 +2,7 @@
     session_start();
     require("DBconnect.php");
 
-    if(isset($_SESSION['userId'])){
+    if (isset($_SESSION['userId'])) {
         header("Location: viewUser.php");
     }
 
@@ -12,7 +12,7 @@
     $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     if ($post && $post['submit'] == "Register") {
-        if (empty($post['username']) || 
+        if (empty($post['username']) ||
             empty($post['email']) ||
             empty($post['password']) ||
             empty($post['password_confirmation']) ||
@@ -20,20 +20,17 @@
             ctype_space($post['email']) ||
             ctype_space($post['password']) ||
             ctype_space($post['password_confirmation'])) {
-
-                $error_flag = true;
-                $error_message = "All Fields are Required";
-        }
-        else{
+            $error_flag = true;
+            $error_message = "All Fields are Required";
+        } else {
             $username = $post['username'];
             $email = $post['email'];
             $password = $post['password'];
             $confirmation = $post['password_confirmation'];
 
-            
+
 
             if ($password === $confirmation) {
-
                 $query = "INSERT INTO users (Username, Email, Password) VALUES (:username, :email, :password)";
                 //7.3 Passwords are hashed and salted
                 $values = [":username" => $username, ":email" => $email, ":password" => password_hash($password, PASSWORD_DEFAULT)];
@@ -41,10 +38,9 @@
                 $statement->execute($values);
 
                 header('Location: index.php?Registered');
-            }
-            else{
+            } else {
                 $error_flag = true;
-                $error_message = "Your Passwords do not match";
+                $error_message = "Your Passwords do not match, Please Try Again";
             }
         }
     }
@@ -60,6 +56,9 @@
         <div id="wrapper">
             <?php include('Sidebar.php') ?>
             <div id="login_box">
+                <?php if ($error_flag): ?>
+                    <h3 id="error_message"><?= $error_message ?></h3>
+                <?php endif ?>
                 <form action="register.php" method="post">
                     <h1>Register</h1>
                     <ul id="registration_form">

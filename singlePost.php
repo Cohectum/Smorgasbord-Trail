@@ -9,7 +9,7 @@
     require('DBConnect.php');
 
     //4.3 Sanitized GET and 4.2 Sanitized IDs
-    if(isset($_GET['id']) && filter_var($_GET['id'], FILTER_VALIDATE_INT)){
+    if (isset($_GET['id']) && filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $query = "SELECT * FROM items WHERE ItemId = {$get['id']}";
@@ -17,11 +17,10 @@
         $statement->execute();
 
         $item = $statement->fetch();
-    }
-    else{
+    } else {
         header('Location: index.php');
     }
-    
+
     $userQuery = "SELECT username FROM users WHERE UserId = {$item['UserId']}";
     $userStatement = $db->prepare($userQuery);
     $userStatement->execute();
@@ -45,7 +44,7 @@
                 <h1>
                     <?= $item['Title'] ?>
                 </h1>
-                <?php if(isset($item['Image'])): ?>
+                <?php if (isset($item['Image'])): ?>
                     <img src="<?= str_replace("Base", "Post", ".".substr($item['Image'], strpos($item['Image'], "images") - 1)) ?>">
                 <?php endif ?>
                 <hr>
@@ -54,8 +53,8 @@
                 </p>
                 <h2>Price: <?= $item['Price'] ?></h2>
                 <p>
-                    <?php 
-                        if(isset($item['Location'])){
+                    <?php
+                        if (isset($item['Location'])) {
                             echo "Location: ".$item['Location'];
                         }
                     ?> 
