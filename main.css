@@ -65,7 +65,7 @@ a:hover{
     vertical-align: middle;
 }
 
-h3#error_message{
+#error_message{
     color: red;
 }
 
@@ -170,3 +170,47 @@ ul#registration_form li label{
     margin: 10px auto;
 }
 
+.row{
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid gray; 
+}
+
+#user_box{
+    
+    flex: 1;
+    text-align: center;
+    margin: auto;
+}
+
+#seller_items{
+    margin: auto;
+    width: 70%;
+}
+
+#review_box{
+    margin: auto;
+    width: 70%;
+}
+
+#post_box{
+    margin: auto;
+}
+
+#rating{
+    width: 80%;
+}
+
+#rating-guide{
+    border: none;
+}
+
+#submit-box{
+    margin: 20px;
+}
+
+.list-image-box{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}

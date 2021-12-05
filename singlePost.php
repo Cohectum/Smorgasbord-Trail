@@ -64,6 +64,7 @@
                     Posted: <?= $item['Created_on'] ?>
                 </p>
                 <p>By: <?= $poster['username'] ?></p>
+                <a href="./ViewUser.php?id=<?= $item['UserId'] ?>"><button>Visit Seller Profile</button></a>
                 <button>Message Seller</button>
             </div>
         </div>

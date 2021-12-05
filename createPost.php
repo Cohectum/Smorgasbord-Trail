@@ -13,10 +13,6 @@
     require '\xampp\htdocs\Smorgasbord-Trail\php-image-resize-master\lib\ImageResizeException.php';
     use Gumlet\ImageResize;
 
-    var_dump($_FILES['image']);
-
-
-
     if ($_POST) {
         $error_message = null;
         $error_flag = false;

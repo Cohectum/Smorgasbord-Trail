@@ -74,26 +74,30 @@
                         <?php endif ?>    
                     </div>
                 <?php endif; ?>
-                <?php while ($post = $statement->fetch()): ?>
-                    <a href="/Smorgasbord-Trail/SinglePost.php?id=<?= $post['ItemId'] ?>">
-                        <div class="post_overview">
-                            <?php if (isset($post['Image'])): ?>
-                                <img src="<?= str_replace("Base", "Thumbnail", ".".substr($post['Image'], strpos($post['Image'], "images") - 1)) ?>">
-                            <?php endif ?>
-                            <div class="post_information">
-                                <h3><?= $post['Title'] ?></h3>
-                                <p>
-                                    <?php
-                                        if (isset($post['Location'])) {
-                                            echo $post['Location'];
-                                        }
-                                    ?> 
-                                </p>
-                                <h2><?= "$".$post['Price'] ?></h2>
+                <div class="container">
+                    <?php while ($post = $statement->fetch()): ?>
+                        <a href="/Smorgasbord-Trail/SinglePost.php?id=<?= $post['ItemId'] ?>">
+                            <div class="row">
+                                <?php if (isset($post['Image'])): ?>
+                                    <div class="col"><div class="list-image-box"><img src="<?= str_replace("Base", "Thumbnail", ".".substr($post['Image'], strpos($post['Image'], "images") - 1)) ?>"></div></div>
+                                <?php else: ?>
+                                    <div class="col"></div>
+                                <?php endif ?>
+                                <div class="col-7">
+                                    <p class="display-6"><?= $post['Title'] ?></p>
+                                    <p class="lead">
+                                        <?php
+                                            if (isset($post['Location'])) {
+                                                echo $post['Location'];
+                                            }
+                                        ?> 
+                                    </p>
+                                </div>
+                                <div class="col"><p class="display-5"><?= "$".$post['Price'] ?></p></div>
                             </div>
-                        </div>
-                    </a>
-                <?php endwhile ?>
+                        </a>
+                    <?php endwhile ?>
+                </div>
             </ul>
         </div>
     </body>

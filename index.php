@@ -26,15 +26,17 @@
     <body>
         <div id="wrapper">
             <?php include("sidebar.php") ?>
-            <h2>Welcome to Smorgasbord Trail!</h2>
-            <div class="split-text">
-                <?php if ($message_flag): ?>
-                    <div id="index_message"> <h3><?= $message ?></h3> </div>
-                <?php endif ?>
-                <p>Smorgasbord Trail is a website to buy and sell retro technology. A place for collectors and enthusiasts to come together to save these gems from landfills!</p>
-                <button id="about">Learn More</button>
-            </div> <!-- Close split-text Div 1 -->
-            <?php include("footer.php") ?>
+            <div class="contianer">
+                <div class="split-text">
+                    <?php if ($message_flag): ?>
+                        <div id="index_message"> <p class="display-6"><?= $message ?></p> </div>
+                    <?php endif ?>
+                    <p class="display-4">Welcome to Smorgasbord Trail!</p>
+                    <p class="lead">Smorgasbord Trail is a website to buy and sell retro technology. A place for collectors and enthusiasts to come together to save these gems from landfills!</p>
+                    <a href="./About.php"><button class="btn btn-primary" id="about">Learn More</button></a>
+                </div> <!-- Close split-text Div 1 -->
+                <?php include("footer.php") ?>
+            </div>
         </div> <!-- Close Wrapper Div -->
     </body>
 </html>

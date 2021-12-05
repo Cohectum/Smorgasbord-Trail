@@ -7,7 +7,7 @@
         <div id="sidebarBox">
             <a href="./index.php"><img src="./Images/STLogo.png" alt="ST Logo" height=150></a>
             <nav> 
-                <ul id="sidebarList">
+                <ul id="sidebarList" class="list-unstyled">
                     <li><a href="./index.php">Home</a></li>
                     <li><a href="./search.php">Search</a></li>
                     <li><a href="./categories.php">Categories</a></li>
@@ -25,9 +25,10 @@
                         endif;
                         if (isset($_SESSION['title'])):
                         if ($_SESSION['title'] == "Admin"):?>
-                        <li><a href="./ModerateComments.php">All Comments</a></li>
-                        <li><a href="./ModeratePosts.php">Moderate Posts</a></li>
-                        <li><a href="./AdminUserView.php">View All Users</a></li>
+                        <hr>
+                        <li><a href="./ModerateComments.php">Comments</a></li>
+                        <li><a href="./ModeratePosts.php">Posts</a></li>
+                        <li><a href="./AdminUserView.php">Users</a></li>
                     <?php endif; endif?>
                 </ul>
             </nav>
