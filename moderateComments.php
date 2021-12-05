@@ -1,8 +1,8 @@
-<?php 
+<?php
 
     require("DBConnect.php");
     session_start();
-    if (!isset($_SESSION['userId']) && $_SESSION['title'] != "Admin"){
+    if (!isset($_SESSION['userId']) && $_SESSION['title'] != "Admin") {
         header("Location: LogIn.php");
         exit();
     }
@@ -17,13 +17,13 @@
                     $dismissStatement = $db->prepare($dismissQuery);
                     $dismissStatement->execute();
                 }
-        
+
                 if (isset($get['delete'])) {
                     $deleteQuery = "DELETE FROM reviews WHERE UserId = {$get['to']} AND Review_User = {$get['from']}";
                     $deleteStatement = $db->prepare($deleteQuery);
                     $deleteStatement->execute();
                 }
-                
+
                 header("Location: ModerateComments.php");
             }
         }
@@ -61,7 +61,7 @@
                     <th scope="col">Delete</th>
                 </tr>
             
-                <?php while($comment = $statement->fetch()): ?>
+                <?php while ($comment = $statement->fetch()): ?>
                     <tr>
                         <td scope="col"><?= $counter ?></td>
                         <td scope="col"><?= $comment["Review_User"] ?></td>
@@ -71,7 +71,7 @@
                         <td scope="col"><a href="./ModerateComments.php?dismiss&from=<?= $comment["Review_User"] ?>&to=<?= $comment["UserId"] ?>">Dismiss</a></td>
                         <td scope="col"><a href="./ModerateComments.php?delete&from=<?= $comment["Review_User"] ?>&to=<?= $comment["UserId"] ?>">Delete</a></td>
                     </tr>
-                <?php 
+                <?php
                     $counter ++;
                     endwhile ?>
             </table>

@@ -106,8 +106,7 @@
                     $error_message = "Something went wrong" . $e->getMessage();
                     $error_flag = true;
                 }
-            }
-            else{
+            } else {
                 $error_flag = true;
                 $error_message = "Uploaded file was not an image(jpg, png, gif)";
             }

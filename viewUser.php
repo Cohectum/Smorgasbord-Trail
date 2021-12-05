@@ -11,12 +11,11 @@
 
     $get = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
-    $selfProfile = false; 
+    $selfProfile = false;
 
-    if($get){
+    if ($get) {
         $userSearch = $get;
-    }
-    else{
+    } else {
         $userSearch = $_SESSION['userId'];
     }
 
@@ -30,26 +29,24 @@
     if ($_POST && !$selfProfile && $reviewDoesntExist) {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-        
+
 
         if (filter_var($post['rating'], FILTER_VALIDATE_INT, ["options" => ["min_range" => 0, "max_range" => 5]])) {
-            if(!strlen($post['content'] < 256)){
-
-                if(ctype_space($post['content'] || empty($post['content']))){
+            if (!strlen($post['content'] < 256)) {
+                if (ctype_space($post['content'] || empty($post['content']))) {
                     $content = null;
-                }
-                else{
+                } else {
                     $content = $post['content'];
                 }
 
                 $reviewQuery = "INSERT INTO reviews (UserId, Review_User, Rating, Content) VALUES (:userId, :reviewUser, :rating, :content)";
                 $reviewStatement = $db->prepare($reviewQuery);
 
-                $reviewStatement->execute([ 
-                    ":userId" => $userSearch, 
-                    "reviewUser" => $_SESSION['userId'], 
-                    ":rating" => $post['rating'], 
-                    ":content" => $content 
+                $reviewStatement->execute([
+                    ":userId" => $userSearch,
+                    "reviewUser" => $_SESSION['userId'],
+                    ":rating" => $post['rating'],
+                    ":content" => $content
                 ]);
 
                 $avgQuery = "SELECT AVG(Rating) FROM reviews WHERE UserId = {$userSearch}";
@@ -62,13 +59,11 @@
                 $userStatement = $db->prepare($userUpdate);
                 $userStatement->bindValue(':score', $avg[0]);
                 $userStatement->execute();
-            }
-            else{
+            } else {
                 $error_flag = true;
                 $error_message = "Review is longer than 255 characters";
             }
-        }
-        else{
+        } else {
             $error_flag = true;
             $error_message = "Incorrect Rating Entered";
         }
@@ -87,7 +82,7 @@
     $commentStatement = $db->prepare($commentQuery);
     $commentStatement->execute();
 
-    
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -102,10 +97,10 @@
         <div id="wrapper">
             <?php require('sidebar.php'); ?>
             <div id="user_box" class="container">
-                <?php if(isset($user['Profile_Picture'])): ?>
+                <?php if (isset($user['Profile_Picture'])): ?>
                    <img src='./Profile_Pictures/<?=$user['Profile_Picture']?>' alt="Profile Picture">
                 <?php endif ?>
-                <?php if($error_flag): ?>
+                <?php if ($error_flag): ?>
                     <p class="error_message"><?= $error_message?></p>
                 <?php endif ?>
                 <p class="h1"><?= $user['Username']?></p>
@@ -115,13 +110,13 @@
                     <div class="container">
 
                     </div>
-                    <?php if($itemStatement->rowCount() === 0): ?>
+                    <?php if ($itemStatement->rowCount() === 0): ?>
                         <p><?= $user['Username']?> has no items for sale.</p>
                     <?php endif ?>
-                    <?php while($item = $itemStatement->fetch()): ?>
+                    <?php while ($item = $itemStatement->fetch()): ?>
                         <a href="./SinglePost.php?id=<?= $item['ItemId'] ?>">
                             <div class="row">
-                                <?php if(isset($item['Image'])): ?>
+                                <?php if (isset($item['Image'])): ?>
                                     <div class="col"><img src="<?= str_replace("Base", "Thumbnail", ".".substr($item['Image'], strpos($item['Image'], "images") - 1)) ?>"></div>
                                 <?php else: ?>
                                     <div class="col"></div>
@@ -137,7 +132,7 @@
                 <h3>Average User Rating: <?= round($user['Review_Score'], 2)?>/5</h3>
                 <hr>
                 <div id="review_box">
-                <?php if(!$selfProfile && $commentValidationStatement->rowcount() == 0): ?>
+                <?php if (!$selfProfile && $commentValidationStatement->rowcount() == 0): ?>
                     <div>
                         <form action="viewUser.php?id=<?= $userSearch ?>" method="post">
                             <ul>
@@ -167,16 +162,16 @@
                         </form>
                     </div>
                     <?php endif ?>
-                    <?php if($commentStatement->rowCount() === 0): ?>
+                    <?php if ($commentStatement->rowCount() === 0): ?>
                         <p>User has not been rated yet</p>
                         <hr>
                     <?php else: ?>
                         <div class="container">
-                            <?php while($comment = $commentStatement->fetch()): ?>
+                            <?php while ($comment = $commentStatement->fetch()): ?>
                                 <div class="row">
                                     <div class="col"><p><?= $comment['Rating'] ?>/5</p></div>
                                     <div class="col">
-                                         <?php if(isset($comment['Content'])): ?>
+                                         <?php if (isset($comment['Content'])): ?>
                                             <p><?= $comment['Content'] ?></p>
                                         <?php endif ?>
                                     </div>
