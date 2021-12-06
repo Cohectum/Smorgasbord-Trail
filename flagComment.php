@@ -1,4 +1,5 @@
-<?php 
+<?php
+
     require("DBConnect.php");
     session_start();
     if (!isset($_SESSION['userId'])) {
@@ -16,4 +17,3 @@
 
     header("Location: ViewUser.php?flagged&id=$to");
     exit();
-?>

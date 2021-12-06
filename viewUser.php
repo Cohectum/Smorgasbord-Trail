@@ -98,7 +98,7 @@
         <div id="wrapper">
             <?php require('sidebar.php'); ?>
             <div id="user_box" class="container">
-                <?php if(isset($_GET['flagged'])): ?>
+                <?php if (isset($_GET['flagged'])): ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         Comment has been Successfully flagged, an admin will review it shortly.
                     </div>

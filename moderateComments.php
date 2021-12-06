@@ -59,7 +59,7 @@
         <div id="wrapper">
             <?php include("Sidebar.php") ?>
             <div class="container">
-                <?php if(!$flaggedset): ?>
+                <?php if (!$flaggedset): ?>
                     <div class="row">
                         <p class="h5">No flagged comments remaining, displaying last <?= $statement->rowcount() ?> created comment(s)!</p>
                     </div>
