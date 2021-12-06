@@ -1,6 +1,7 @@
 <?php
     session_start();
     require('DBConnect.php');
+    require __DIR__.'/vendor/autoload.php';
 
     $isLoggedIn = isset($_SESSION['userId']);
     $fill_flag = false;

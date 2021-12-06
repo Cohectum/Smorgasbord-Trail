@@ -1,6 +1,7 @@
 <?php
     session_start();
     require("DBconnect.php");
+    require __DIR__.'/vendor/autoload.php';
 
     if (isset($_SESSION['userId'])) {
         header("Location: viewUser.php");

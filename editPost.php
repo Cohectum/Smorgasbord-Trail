@@ -1,4 +1,5 @@
 <?php
+    require __DIR__.'/vendor/autoload.php';
     /*
      * Author: Cameron Foy
      * Purpose: Post edit/delete form

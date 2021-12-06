@@ -5,7 +5,7 @@
      * Last Updated: 11/22/2021
      */
     session_start();
-
+    require __DIR__.'/vendor/autoload.php';
 
     require("DBconnect.php");
     $error_flag = false;

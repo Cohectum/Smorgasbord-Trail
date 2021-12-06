@@ -5,7 +5,7 @@
      * Last Updated: 11/20/2021
      */
 
-
+    require __DIR__.'/vendor/autoload.php';
     require('DBConnect.php');
 
     //4.3 Sanitized GET and 4.2 Sanitized IDs

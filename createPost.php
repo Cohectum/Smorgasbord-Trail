@@ -4,6 +4,7 @@
      * Purpose: Post creation form
      * Last Updated: 11/21/2021
      */
+    require __DIR__.'/vendor/autoload.php';
     session_start();
     if (!isset($_SESSION['userId'])) {
         header("Location: LogIn.php");
