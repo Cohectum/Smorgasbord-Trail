@@ -97,6 +97,11 @@
         <div id="wrapper">
             <?php require('sidebar.php'); ?>
             <div id="user_box" class="container">
+                <?php if(isset($_GET['flagged'])): ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        Comment has been Successfully flagged, an admin will review it shortly.
+                    </div>
+                <?php endif ?>
                 <?php if (isset($user['Profile_Picture'])): ?>
                    <img src='./Profile_Pictures/<?=$user['Profile_Picture']?>' alt="Profile Picture">
                 <?php endif ?>
@@ -107,9 +112,6 @@
                 <hr>
                 <div id="seller_items">
                     <h2>User Listings</h2>
-                    <div class="container">
-
-                    </div>
                     <?php if ($itemStatement->rowCount() === 0): ?>
                         <p><?= $user['Username']?> has no items for sale.</p>
                     <?php endif ?>
@@ -174,6 +176,9 @@
                                          <?php if (isset($comment['Content'])): ?>
                                             <p><?= $comment['Content'] ?></p>
                                         <?php endif ?>
+                                    </div>
+                                    <div class="col">
+                                        <a href="./FlagComment.php?from=<?= $comment['Review_User'] ?>&to=<?= $comment['UserId'] ?>"><button class="btn btn-dark">Flag Comment</button></a>
                                     </div>
                                 </div>
                             <?php endwhile ?>

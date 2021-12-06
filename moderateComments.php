@@ -1,5 +1,5 @@
 <?php
-
+    require __DIR__.'/vendor/autoload.php';
     require("DBConnect.php");
     session_start();
     if (!isset($_SESSION['userId']) && $_SESSION['title'] != "Admin") {
@@ -33,6 +33,16 @@
     $statement = $db->prepare($query);
     $statement->execute();
 
+    $flaggedset = true;
+
+    if ($statement->rowcount() == 0) {
+        $query = "SELECT * FROM reviews ORDER BY DATE DESC LIMIT 100";
+        $statement = $db->prepare($query);
+        $statement->execute();
+
+        $flaggedset = false;
+    }
+
     $counter = 1
 
 ?>
@@ -48,33 +58,46 @@
     <body>
         <div id="wrapper">
             <?php include("Sidebar.php") ?>
-            <table class="table table-striped">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Reviewer</th>
-                    <th scope="col">Reviewed</th>
-                    <th scope="col">Score</th>
-                    <th scope="col">Content</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col">Dismiss</th>
-                    <th scope="col">Delete</th>
-                </tr>
-            
-                <?php while ($comment = $statement->fetch()): ?>
-                    <tr>
-                        <td scope="col"><?= $counter ?></td>
-                        <td scope="col"><?= $comment["Review_User"] ?></td>
-                        <td scope="col"><?= $comment["UserId"] ?></td>
-                        <td scope="col"><?= $comment["Rating"] ?></td>
-                        <td colspan="3"><?= $comment["Content"] ?></td>
-                        <td scope="col"><a href="./ModerateComments.php?dismiss&from=<?= $comment["Review_User"] ?>&to=<?= $comment["UserId"] ?>">Dismiss</a></td>
-                        <td scope="col"><a href="./ModerateComments.php?delete&from=<?= $comment["Review_User"] ?>&to=<?= $comment["UserId"] ?>">Delete</a></td>
-                    </tr>
-                <?php
-                    $counter ++;
-                    endwhile ?>
-            </table>
+            <div class="container">
+                <?php if(!$flaggedset): ?>
+                    <div class="row">
+                        <p class="h5">No flagged comments remaining, displaying last <?= $statement->rowcount() ?> created comment(s)!</p>
+                    </div>
+                <?php endif ?>
+                <div class="row">
+                    <table class="table table-striped">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Reviewer</th>
+                            <th scope="col">Reviewed</th>
+                            <th scope="col">Score</th>
+                            <th scope="col">Content</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <?php if ($flaggedset) : ?>
+                                <th scope="col">Dismiss</th>
+                            <?php endif ?>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    
+                        <?php while ($comment = $statement->fetch()): ?>
+                            <tr>
+                                <td scope="col"><?= $counter ?></td>
+                                <td scope="col"><?= $comment["Review_User"] ?></td>
+                                <td scope="col"><?= $comment["UserId"] ?></td>
+                                <td scope="col"><?= $comment["Rating"] ?></td>
+                                <td colspan="3"><?= $comment["Content"] ?></td>
+                                <?php if ($flaggedset) : ?>
+                                    <td scope="col"><a href="./ModerateComments.php?dismiss&from=<?= $comment["Review_User"] ?>&to=<?= $comment["UserId"] ?>">Dismiss</a></td>
+                                <?php endif ?>
+                                <td scope="col"><a href="./ModerateComments.php?delete&from=<?= $comment["Review_User"] ?>&to=<?= $comment["UserId"] ?>">Delete</a></td>
+                            </tr>
+                        <?php
+                            $counter ++;
+                            endwhile ?>
+                    </table>
+                </div>
+            </div>
         </div>
     </body>
 </html>
