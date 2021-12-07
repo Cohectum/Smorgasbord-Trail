@@ -267,7 +267,7 @@
     <body>
         <div id="wrapper">
             <?php include('sidebar.php') ?>
-            <form action="editPost.php?id=<?= $id ?>" method="post" enctype='multipart/form-data'>
+            <form action="editPost.php?id=<?= $id ?>" method="post" enctype='multipart/form-data' id="create">
                 <?php if ($_POST): ?>
                     <?php if ($success_flag): ?>
                         <li><h1>Your Edits were successful, post updated.</h1></li>
@@ -275,6 +275,7 @@
                 <?php endif ?>
                 <?php if (isset($item['Image'])): ?>
                     <img src="<?= str_replace("Base", "Post", ".".substr($item['Image'], strpos($item['Image'], "images") - 1)) ?>">
+                    <hr>
                 <?php endif ?>
                 <ul id="createList">
                     <?php if ($_POST): ?>

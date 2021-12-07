@@ -7,6 +7,7 @@
 
     require __DIR__.'/vendor/autoload.php';
     require('DBConnect.php');
+    session_start();
 
     //4.3 Sanitized GET and 4.2 Sanitized IDs
     if (isset($_GET['id']) && filter_var($_GET['id'], FILTER_VALIDATE_INT)) {

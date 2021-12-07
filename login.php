@@ -6,11 +6,14 @@
      */
     session_start();
     require __DIR__.'/vendor/autoload.php';
-
     require("DBconnect.php");
     $error_flag = false;
     $error_message = "";
     $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    if (isset($_SESSION['userId'])) {
+        header('Location: ViewUser.php');
+    }
 
     //If a button is clicked
     if (isset($post['submit'])) {

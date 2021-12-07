@@ -30,8 +30,6 @@
     if ($_POST && !$selfProfile && $reviewDoesntExist) {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-
-
         if (filter_var($post['rating'], FILTER_VALIDATE_INT, ["options" => ["min_range" => 0, "max_range" => 5]])) {
             if (!strlen($post['content'] < 256)) {
                 if (ctype_space($post['content'] || empty($post['content']))) {

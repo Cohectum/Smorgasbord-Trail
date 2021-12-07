@@ -1,55 +1,55 @@
-*{
+ul{
     list-style: none;
+}
+
+a{
+    color: #000;
+    text-decoration: none;
 }
 
 body{
     background-color: slategrey;
 }
 
-#wrapper{
+#wrapper:not(#sidebar){
+    min-height: 800px;
     margin: auto;
     margin-top: 30px;
-    padding: 15px;
+    padding: 15px 15px 15px 0;
     display: flex;
     background-color: white;
     width: 60%;
     text-align: center;
 }
 
-#sidebarList li a{
-    text-decoration: none;
-    color: black;
+#sidebar{
+    position: fixed;
+    left: 22%;
 }
 
-#sidebarBox ul{
-    text-align: left;
+.image-box{
+    width: 150px;
+    margin: auto;
 }
 
-#sidebarList li{
-    position: relative;
+.link-hoverable:hover{
+    color: #fff;
+    background-color: #0d6efd;
+    transition: 0.3s;
 }
 
-#sidebarList li:hover{
-    background-color: #bebebe;
-}
-
-a{
-    text-decoration: none;
-    position: relative;
-    margin: 0;
-    padding: 0;
-    color: #000;
-}
-
-
-a:hover{
-    color: #000;
+#sidebar-heading{
+    text-align: center;
 }
 
 #index_message{
     border: 2px solid #90EEBF;
     border-radius: 5px;
     background-color: #90EEBF;
+}
+
+#create{
+    margin: auto;
 }
 
 #createList li{

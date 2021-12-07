@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '7cecbe978804b3fa6927c949f8b39047d52548c1',
+        'reference' => '0c0bf40998fb4cb159b2311877b96838468b8b91',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '7cecbe978804b3fa6927c949f8b39047d52548c1',
+            'reference' => '0c0bf40998fb4cb159b2311877b96838468b8b91',
             'dev_requirement' => false,
         ),
         'composer/semver' => array(
@@ -306,6 +306,21 @@
             'aliases' => array(),
             'reference' => '18d9a1737466b7d88df044b8653a13adaa7648f1',
             'dev_requirement' => false,
+        ),
+        'twbs/bootstrap' => array(
+            'pretty_version' => 'v5.1.3',
+            'version' => '5.1.3.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../twbs/bootstrap',
+            'aliases' => array(),
+            'reference' => '1a6fdfae6be09b09eaced8f0e442ca6f7680a61e',
+            'dev_requirement' => false,
+        ),
+        'twitter/bootstrap' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v5.1.3',
+            ),
         ),
     ),
 );
