@@ -115,17 +115,22 @@
                         <p><?= $user['Username']?> has no items for sale.</p>
                     <?php endif ?>
                     <?php while ($item = $itemStatement->fetch()): ?>
-                        <a href="./SinglePost.php?id=<?= $item['ItemId'] ?>">
-                            <div class="row">
+                        <div class="row">
+                            <a class="d-flex align-items-center" href="./SinglePost.php?id=<?= $item['ItemId'] ?>">
                                 <?php if (isset($item['Image'])): ?>
-                                    <div class="col"><img src="<?= str_replace("Base", "Thumbnail", ".".substr($item['Image'], strpos($item['Image'], "images") - 1)) ?>"></div>
+                                    <div class="col"><img class="" src="<?= str_replace("Base", "Thumbnail", ".".substr($item['Image'], strpos($item['Image'], "images") - 1)) ?>"></div>
                                 <?php else: ?>
                                     <div class="col"></div>
                                 <?php endif ?>
-                                <div class="col-6"><p><?= $item['Title']?></p></div>
-                                <div class="col"><p>$<?= $item['Price']?></p></div>
-                            </div>
-                        </a>
+                                <div class="col align-items-center"><p style="margin:auto;"><?= $item['Title']?></p></div>
+                                <div class="col align-items-center"><p style="margin:auto;">$<?= $item['Price']?></p></div>
+                            </a>
+                            <?php if($selfProfile): ?>
+                                <div class="row unstyled">
+                                    <a href="./EditPost.php?id=<?= $item['ItemId'] ?>"><button class="btn btn-dark">Edit Post</button></a>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                     <?php endwhile ?>
                 </div>
                 <hr>

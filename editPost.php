@@ -249,6 +249,10 @@
         $query = "SELECT * FROM categories ORDER BY Category_Name";
         $statement = $db->prepare($query);
         $statement->execute();
+
+        if ($item['UserId'] != $_SESSION['userId']) {
+            header('Location: index.php?404');
+        }
     } else {
         header('Location: index.php?404');
     }

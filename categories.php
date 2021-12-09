@@ -20,13 +20,16 @@
     <body>
         <div id='wrapper'>
             <?php include('sidebar.php') ?>
-            <ul id="category_list">
-                <?php while ($category = $statement->fetch()):  //<?= preg_replace("/ /", "-", $category[1])?>
-                    <li> 
-                        <a href="/Smorgasbord-Trail/postList.php?Category=<?= $category[0] ?>"><?= $category[1]?></a>
-                    </li>
-                <?php endwhile ?>
-            </ul>
+            <div class="container">
+                <div class="row">
+                    <ul class="list-unstyled" id="category_list">
+                        <?php while ($category = $statement->fetch()): ?>
+                            <hr>
+                            <a class="link-dark link-hoverable" href="/Smorgasbord-Trail/postList.php?Category=<?= $category[0] ?>"><li class="link-hoverable display-6"><?= $category[1]?></li></a>
+                        <?php endwhile ?>
+                    </ul>
+                </div>
+            </div>
         </div>
     </body>
 </html>

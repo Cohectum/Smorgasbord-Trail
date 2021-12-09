@@ -80,24 +80,26 @@
     <body>
         <div id="wrapper">
             <?php include("sidebar.php") ?>
-            <div id="login_box">
+            <div id="login_box" class="container d-flex flex-column align-items-center">
                 <?php if ($error_flag): ?>
                         <h3 id="error_message"><?= $error_message ?></h3>
                 <?php endif ?>
-                <h1>Log In</h1>
-                <form action="login.php" method="POST">
+                <div class="row unstyled">
+                    <p class="display-5">Log In</p>
+                </div>
+                <form class="row" action="login.php" method="POST">
                     <ul id="login_form">
                         <li>
                             <label for="username">Username:</label>
-                            <input type="text" id="username" name="username">
+                            <input class="form-control" type="text" id="username" name="username">
                         </li>
                         <li>
                             <label for="password">Password:</label>
-                            <input type="password" id="password" name="password">
+                            <input class="form-control" type="password" id="password" name="password">
                         </li>
                         <li id="login_button_box">
-                            <input type="submit" id="login" name="submit" value="Log In">
-                            <input type="submit" id="register" name="submit" value="Register">
+                            <input class="btn btn-primary" type="submit" id="login" name="submit" value="Log In">
+                            <input class="btn btn-secondary" type="submit" id="register" name="submit" value="Register">
                         </li>
                     </ul>
                 </form>

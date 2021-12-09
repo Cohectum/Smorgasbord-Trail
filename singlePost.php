@@ -41,32 +41,44 @@
     <body>
         <div id="wrapper">
             <?php include('sidebar.php'); ?>
-            <div id="post_box">
-                <h1>
-                    <?= $item['Title'] ?>
-                </h1>
-                <?php if (isset($item['Image'])): ?>
-                    <img src="<?= str_replace("Base", "Post", ".".substr($item['Image'], strpos($item['Image'], "images") - 1)) ?>">
-                <?php endif ?>
-                <hr>
-                <p>
-                    <?= $item['Description'] ?>
-                </p>
-                <h2>Price: <?= $item['Price'] ?></h2>
-                <p>
-                    <?php
-                        if (isset($item['Location'])) {
-                            echo "Location: ".$item['Location'];
-                        }
-                    ?> 
-                </p>
-                <hr>
-                <p>
-                    Posted: <?= $item['Created_on'] ?>
-                </p>
-                <p>By: <?= $poster['username'] ?></p>
-                <a href="./ViewUser.php?id=<?= $item['UserId'] ?>"><button>Visit Seller Profile</button></a>
-                <button>Message Seller</button>
+            <div id="post_box" class="container">
+                <div class="row">
+                    <h1>
+                        <?= $item['Title'] ?>
+                    </h1>
+                    <?php if (isset($item['Image'])): ?>
+                        <div>
+                            <img id="single-image" src="<?= str_replace("Base", "Post", ".".substr($item['Image'], strpos($item['Image'], "images") - 1)) ?>">
+                        </div>
+                    <?php endif ?>
+                    <hr>
+                    <div class="container">
+                        <div class="unstyled row">
+                            <p>
+                                <?= $item['Description'] ?>
+                            </p>
+                        </div>
+                        <div class="unstyled row">
+                            <p class="col">
+                                <?php
+                                    if (isset($item['Location'])) {
+                                        echo "Location: ".$item['Location'];
+                                    }
+                                ?> 
+                            </p>
+                            <p class="col h3">Price: <?= $item['Price'] ?></h2>
+                        </div>
+                    </div>
+                    <hr>
+                    <p>
+                        Posted: <?= $item['Created_on'] ?>
+                    </p>
+                    <p>By: <?= $poster['username'] ?></p>
+                    <div class="d-flex justify-content-center">
+                        <a href="./ViewUser.php?id=<?= $item['UserId'] ?>"><button class="btn btn-primary">Visit Seller Profile</button></a>
+                        <a href="#"><button class="btn btn-secondary">Message Seller</button></a>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

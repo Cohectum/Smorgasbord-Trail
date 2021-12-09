@@ -17,7 +17,7 @@ body{
     margin-top: 30px;
     padding: 15px 15px 15px 0;
     display: flex;
-    background-color: white;
+    background-color: #f9f9f9;
     width: 60%;
     text-align: center;
 }
@@ -74,23 +74,11 @@ body{
     padding: auto;
 }
 
-#category_list li:first-of-type{
-    margin-top: 40px;
-}
-
-#category_list li:last-of-type{
-    margin-bottom: 40px;
-}
-
 #category_list li{
     width: 100%;
     margin: 2px;
     padding: 3px;
     border-radius: 3px;
-}
-
-#category_list li:hover{
-    background-color: slategrey;
 }
 
 #category_list li a{
@@ -125,6 +113,11 @@ body{
     margin-left: 15px;
 }
 
+form{
+    width: 500px;
+    margin: auto;
+}
+
 div#login_box{
     margin: auto;
     height: 100%;
@@ -141,11 +134,13 @@ ul#login_form li label{
 }
 
 li#login_button_box{
+    justify-content: center;
     display: flex;
 }
 
 #login_button_box input{
-    flex: 1;
+    width:100px;
+    margin: 20px 20px 0 20px;
 }
 
 ul#registration_form{
@@ -170,14 +165,15 @@ ul#registration_form li label{
     margin: 10px auto;
 }
 
-.row{
+.row:not(.unstyled){
+    background-color: #fff;
     margin-top: 20px;
     padding: 10px;
-    border: 1px solid gray; 
+    border-radius: 8px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
 }
 
 #user_box{
-    
     flex: 1;
     text-align: center;
     margin: auto;
@@ -213,4 +209,22 @@ ul#registration_form li label{
     position: relative;
     top: 50%;
     transform: translateY(-50%);
+}
+
+input#search-button.btn.btn-primary{
+    margin-top: 20px
+    
+}
+
+.form-select{
+    margin-top: 20px;
+}
+
+#filter div{
+    margin-top: 10px;
+    text-align: left;
+}
+
+#single-image{
+    margin: 10px;
 }

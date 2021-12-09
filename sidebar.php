@@ -20,7 +20,7 @@
                     <?php else: ?>
                         <li><a class="nav-link link-dark link-hoverable" href="./viewUser.php">Your Profile</a></li>
                         <li><a class="nav-link link-dark link-hoverable" href="./createPost.php">Post</a></li>
-                        <li><a class="nav-link link-dark link-hoverable" href="./messages.php">Messages</a></li>
+                        <li><a class="nav-link link-dark link-hoverable" href="">Messages <span class="badge bg-info text-dark">WIP</span></a></li>
                         <li><a class="nav-link link-dark link-hoverable" href="./logout.php">Logout</a></li>
                     <?php
                         endif;
@@ -29,7 +29,7 @@
                         <hr>
                         <li id="sidebar-heading"><p class="h5">Moderation</p></li>
                         <li><a class="nav-link link-dark link-hoverable" href="./ModerateComments.php">Comments</a></li>
-                        <li><a class="nav-link link-dark link-hoverable" href="./ModeratePosts.php">Posts</a></li>
+                        <li><a class="nav-link link-dark link-hoverable" href="">Posts <span class="badge bg-info text-dark">WIP</span></a></li>
                         <li><a class="nav-link link-dark link-hoverable" href="./AdminUserView.php">Users</a></li>
                     <?php endif; endif?>
                 </ul>

@@ -56,31 +56,33 @@
     <body>
         <div id="wrapper">
             <?php include('Sidebar.php') ?>
-            <div id="login_box">
+            <div id="login_box" class="container d-flex flex-column align-items-center">
                 <?php if ($error_flag): ?>
                     <h3 id="error_message"><?= $error_message ?></h3>
                 <?php endif ?>
-                <form action="register.php" method="post">
-                    <h1>Register</h1>
+                <div class="row unstyled">
+                        <p class="display-5">Register</p>
+                </div>
+                <form class="row" action="register.php" method="post">    
                     <ul id="registration_form">
                         <li>
                             <label for="username">Username:</label>
-                            <input type="text" id="username" name="username">
+                            <input class="form-control" type="text" id="username" name="username">
                         </li>
                         <li>
                             <label for="email">Email:</label>
-                            <input type="email" id="email" name="email">
+                            <input class="form-control" type="email" id="email" name="email">
                         </li>
                         <li>
                             <label for="password">Password:</label>
-                            <input type="password" id="password" name="password">
+                            <input class="form-control" type="password" id="password" name="password">
                         </li>
                         <li>
                             <label for="password_confirmation">Confirm Password:</label>
-                            <input type="password" id="password_confirmation" name="password_confirmation">
+                            <input class="form-control" type="password" id="password_confirmation" name="password_confirmation">
                         </li>
-                        <li id="button_box">
-                            <input type="submit" id="registration_button" name="submit" value="Register">
+                        <li id="login_button_box">
+                            <input class="btn btn-primary" type="submit" id="registration_button" name="submit" value="Register">
                         </li>
                     </ul>
                 </form>
