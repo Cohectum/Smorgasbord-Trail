@@ -77,8 +77,9 @@
     }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
         <title>
             Smorgasbord Trail - Edit Profile
         </title>
@@ -110,7 +111,7 @@
                                 <input name="email" id="email" class="form-control" type="text" value="<?= $user['Email'] ?>">
                             </li>
                             <li id="login_button_box">
-                                <input name="submit", id="submit" class="btn btn-primary" type="submit" value="Update">
+                                <input name="submit" id="submit" class="btn btn-primary" type="submit" value="Update">
                                 <input class="btn btn-secondary" type="submit" value="Update Password (WIP)" style="width: 200px;">
                             </li>
                         </ul>

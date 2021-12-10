@@ -47,8 +47,9 @@
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
         <title>
             Moderation - Comments
         </title>
@@ -82,15 +83,15 @@
                     
                         <?php while ($comment = $statement->fetch()): ?>
                             <tr>
-                                <td scope="col"><?= $counter ?></td>
-                                <td scope="col"><?= $comment["Review_User"] ?></td>
-                                <td scope="col"><?= $comment["UserId"] ?></td>
-                                <td scope="col"><?= $comment["Rating"] ?></td>
+                                <td><?= $counter ?></td>
+                                <td><?= $comment["Review_User"] ?></td>
+                                <td><?= $comment["UserId"] ?></td>
+                                <td><?= $comment["Rating"] ?></td>
                                 <td colspan="3"><?= $comment["Content"] ?></td>
                                 <?php if ($flaggedset) : ?>
-                                    <td scope="col"><a href="./ModerateComments.php?dismiss&from=<?= $comment["Review_User"] ?>&to=<?= $comment["UserId"] ?>">Dismiss</a></td>
+                                    <td><a href="./ModerateComments.php?dismiss&from=<?= $comment["Review_User"] ?>&to=<?= $comment["UserId"] ?>">Dismiss</a></td>
                                 <?php endif ?>
-                                <td scope="col"><a href="./ModerateComments.php?delete&from=<?= $comment["Review_User"] ?>&to=<?= $comment["UserId"] ?>">Delete</a></td>
+                                <td><a href="./ModerateComments.php?delete&from=<?= $comment["Review_User"] ?>&to=<?= $comment["UserId"] ?>">Delete</a></td>
                             </tr>
                         <?php
                             $counter ++;

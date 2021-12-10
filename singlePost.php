@@ -30,11 +30,12 @@
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-    <title>
-        Smorgasbord Trail - <?= $item['Title'] ?>
-    </title>
+        <meta charset="UTF-8">
+        <title>
+            Smorgasbord Trail - <?= $item['Title'] ?>
+        </title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="./main.css">
     </head>
@@ -48,7 +49,7 @@
                     </h1>
                     <?php if (isset($item['Image'])): ?>
                         <div>
-                            <img id="single-image" src="<?= str_replace("Base", "Post", ".".substr($item['Image'], strpos($item['Image'], "images") - 1)) ?>">
+                            <img id="single-image" src="<?= str_replace("Base", "Post", ".".substr($item['Image'], strpos($item['Image'], "images") - 1)) ?>" alt="Post Image">
                         </div>
                     <?php endif ?>
                     <hr>
@@ -66,7 +67,7 @@
                                     }
                                 ?> 
                             </p>
-                            <p class="col h3">Price: <?= $item['Price'] ?></h2>
+                            <p class="col h3">Price: <?= $item['Price'] ?></p>
                         </div>
                     </div>
                     <hr>
@@ -75,8 +76,8 @@
                     </p>
                     <p>By: <?= $poster['username'] ?></p>
                     <div class="d-flex justify-content-center">
-                        <a href="./ViewUser.php?id=<?= $item['UserId'] ?>"><button class="btn btn-primary">Visit Seller Profile</button></a>
-                        <a href="#"><button class="btn btn-secondary">Message Seller</button></a>
+                        <a class="btn btn-primary" href="./ViewUser.php?id=<?= $item['UserId'] ?>">Visit Seller Profile</a>
+                        <a class="btn btn-secondary" href="#">Message Seller</a>
                     </div>
                 </div>
             </div>

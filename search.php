@@ -22,8 +22,9 @@
     $statement->execute();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
         <title>Smorgasbord Trail - Search</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="./main.css">
@@ -46,7 +47,7 @@
                                     <option value="<?= $row[0] ?>"><?= $row[1] ?></option>
                                 <?php endwhile ?>
                             </select>
-                            <input class="btn btn-primary" id="search-button" type="submit" value="search" style="width: 150px;">
+                            <input class="btn btn-primary" id="search-button" type="submit" value="Search" style="width: 150px;">
                         </div>
                     </form>
                 </div>
@@ -63,7 +64,7 @@
                         <a href="/Smorgasbord-Trail/SinglePost.php?id=<?= $post['ItemId'] ?>">
                             <div class="row">
                                 <?php if (isset($post['Image'])): ?>
-                                    <div class="col"><div class="list-image-box"><img src="<?= str_replace("Base", "Thumbnail", ".".substr($post['Image'], strpos($post['Image'], "images") - 1)) ?>"></div></div>
+                                    <div class="col"><div class="list-image-box"><img src="<?= str_replace("Base", "Thumbnail", ".".substr($post['Image'], strpos($post['Image'], "images") - 1)) ?>" alt="Post Thumbnail"></div></div>
                                 <?php else: ?>
                                     <div class="col"></div>
                                 <?php endif ?>

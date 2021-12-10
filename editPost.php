@@ -262,8 +262,9 @@
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
         <title>Smorgasbord Trail - <?= $item['Title']?></title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="./main.css">
@@ -271,74 +272,76 @@
     <body>
         <div id="wrapper">
             <?php include('sidebar.php') ?>
-            <form action="editPost.php?id=<?= $id ?>" method="post" enctype='multipart/form-data' id="create">
-                <?php if ($_POST): ?>
-                    <?php if ($success_flag): ?>
-                        <li><h1>Your Edits were successful, post updated.</h1></li>
-                    <?php endif ?>
-                <?php endif ?>
-                <?php if (isset($item['Image'])): ?>
-                    <img src="<?= str_replace("Base", "Post", ".".substr($item['Image'], strpos($item['Image'], "images") - 1)) ?>">
-                    <hr>
-                <?php endif ?>
-                <ul id="createList">
+            <div class="container">
+                <form class="row" action="editPost.php?id=<?= $id ?>" method="post" enctype='multipart/form-data' id="create">
                     <?php if ($_POST): ?>
-                        <?php if ($error_flag): ?>
-                            <li><h3 id="error_message"><?= $error_message ?></h3></li>
+                        <?php if ($success_flag): ?>
+                            <li><h1>Your Edits were successful, post updated.</h1></li>
                         <?php endif ?>
                     <?php endif ?>
-
-                    <li>
-                        <label for="image">New Image:</label>
-                        <input type="file" id="image" name="image">
-                    </li>
-                    <li>
-                        <label for="remove_image">Remove Image:</label>
-                        <input type="checkbox" name="remove_image" id="remove_image">
-                    </li>
-                    <li>
-                        <label for="title">Title:</label>
-                        <input type="text" id="title" name="title" value="<?= $item['Title'] ?>">
-                    </li>
-                    <li>
-                        <label for="description">Description:</label>
-                        <textarea name="description" id="description" cols="50" rows="5"><?= $item['Description']?></textarea>
-                    </li>
-                    <li>
-                        <Label for="category">Category:</Label>
-                        <select name="category" id="category">
-                            <option value=""> -- None -- </option>
-                        <?php while ($row = $statement->fetch()): ?>
-                                <?php if ($row[0] == $itemCategory[0]): ?>
-                                    <option selected value="<?= $row[0] ?>"><?= $row[1] ?></option>
-                                <?php else: ?>
-                                    <option value="<?= $row[0] ?>"><?= $row[1] ?></option>
-                                <?php endif ?>
-                        <?php endwhile ?>
-                        </select>
-                    </li>
-                    <li>
-                        <label for="price">Price:</label>
-                        <input type="text" id="price" name="price" value="<?= $item['Price'] ?>">
-                    </li>
-                    <li>
-                        <label for="location">Location:</label>
-                        <input type="text" id="location" name="location" placeholder="Ex: 555 Sample St, Winnipeg" value="<?= $item['Location'] ?>">
-                    </li>
-                    <li>
-                        <label for="check">Hide Location:</label>
-                        <?php if ($item['Location'] == null): ?>
-                            <input type="checkbox" id="check" name="check" value="hideLocation" checked>
-                        <?php else: ?>
-                            <input type="checkbox" id="check" name="check" value="hideLocation">
+                    <?php if (isset($item['Image'])): ?>
+                        <img src="<?= str_replace("Base", "Post", ".".substr($item['Image'], strpos($item['Image'], "images") - 1)) ?>" alt="Post Image">
+                        <hr>
+                    <?php endif ?>
+                    <ul id="createList">
+                        <?php if ($_POST): ?>
+                            <?php if ($error_flag): ?>
+                                <li><h3 id="error_message"><?= $error_message ?></h3></li>
+                            <?php endif ?>
                         <?php endif ?>
-                    </li>
-                    <li>
-                        <input type="submit" name="submit" value="Update">
-                        <input type="submit" name="submit" value="Delete" onclick="return confirm('Are you sure you wish to delete this post?')">
-                    </li>
-                </ul>
-            </form>
+
+                        <li>
+                            <label for="image">New Image:</label>
+                            <input class="form-control" type="file" id="image" name="image">
+                        </li>
+                        <li>
+                            <label for="remove_image">Remove Image:</label>
+                            <input type="checkbox" name="remove_image" id="remove_image">
+                        </li>
+                        <li>
+                            <label for="title">Title:</label>
+                            <input class="form-control" type="text" id="title" name="title" value="<?= $item['Title'] ?>">
+                        </li>
+                        <li>
+                            <label for="description">Description:</label>
+                            <textarea class="form-control" name="description" id="description" cols="50" rows="5"><?= $item['Description']?></textarea>
+                        </li>
+                        <li>
+                            <Label for="category">Category:</Label>
+                            <select class="form-select" name="category" id="category">
+                                <option value=""> -- None -- </option>
+                            <?php while ($row = $statement->fetch()): ?>
+                                    <?php if ($row[0] == $itemCategory[0]): ?>
+                                        <option selected value="<?= $row[0] ?>"><?= $row[1] ?></option>
+                                    <?php else: ?>
+                                        <option value="<?= $row[0] ?>"><?= $row[1] ?></option>
+                                    <?php endif ?>
+                            <?php endwhile ?>
+                            </select>
+                        </li>
+                        <li>
+                            <label for="price">Price:</label>
+                            <input class="form-control" type="text" id="price" name="price" value="<?= $item['Price'] ?>">
+                        </li>
+                        <li>
+                            <label for="location">Location:</label>
+                            <input class="form-control" type="text" id="location" name="location" placeholder="Ex: 555 Sample St, Winnipeg" value="<?= $item['Location'] ?>">
+                        </li>
+                        <li>
+                            <label for="check">Hide Location:</label>
+                            <?php if ($item['Location'] == null): ?>
+                                <input type="checkbox" id="check" name="check" value="hideLocation" checked>
+                            <?php else: ?>
+                                <input type="checkbox" id="check" name="check" value="hideLocation">
+                            <?php endif ?>
+                        </li>
+                        <li>
+                            <input class="btn btn-primary" type="submit" name="submit" value="Update">
+                            <input class="btn btn-secondary" type="submit" name="submit" value="Delete" onclick="return confirm('Are you sure you wish to delete this post?')">
+                        </li>
+                    </ul>
+                </form>
+            </div>
         </div>
     </body>
 </html>

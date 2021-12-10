@@ -9,8 +9,9 @@
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
         <title>
             Smorgasbord Trail - Categories
         </title>
@@ -24,8 +25,8 @@
                 <div class="row">
                     <ul class="list-unstyled" id="category_list">
                         <?php while ($category = $statement->fetch()): ?>
-                            <hr>
-                            <a class="link-dark link-hoverable" href="/Smorgasbord-Trail/postList.php?Category=<?= $category[0] ?>"><li class="link-hoverable display-6"><?= $category[1]?></li></a>
+                            <li class="link-hoverable display-6"><a class="link-dark link-hoverable" href="/Smorgasbord-Trail/postList.php?Category=<?= $category[0] ?>"><?= $category[1]?></a></li>
+                            <li><hr></li>
                         <?php endwhile ?>
                     </ul>
                 </div>

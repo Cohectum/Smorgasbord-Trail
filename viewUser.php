@@ -84,9 +84,10 @@
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-    <title>
+        <meta charset="UTF-8">
+        <title>
             Smorgasbord Trail - View User
         </title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -108,6 +109,9 @@
                     <p class="error_message"><?= $error_message?></p>
                 <?php endif ?>
                 <p class="h1"><?= $user['Username']?></p>
+                <?php if($selfProfile): ?>
+                    <a class="btn btn-primary" href="./EditProfile.php?id=<?=$user['UserId']?>">Edit Profile</a>
+                <?php endif; ?>
                 <hr>
                 <div id="seller_items">
                     <h2>User Listings</h2>
@@ -118,7 +122,7 @@
                         <div class="row">
                             <a class="d-flex align-items-center" href="./SinglePost.php?id=<?= $item['ItemId'] ?>">
                                 <?php if (isset($item['Image'])): ?>
-                                    <div class="col"><img class="" src="<?= str_replace("Base", "Thumbnail", ".".substr($item['Image'], strpos($item['Image'], "images") - 1)) ?>"></div>
+                                    <div class="col"><img class="" src="<?= str_replace("Base", "Thumbnail", ".".substr($item['Image'], strpos($item['Image'], "images") - 1)) ?>" alt="Post Image"></div>
                                 <?php else: ?>
                                     <div class="col"></div>
                                 <?php endif ?>
@@ -127,7 +131,7 @@
                             </a>
                             <?php if($selfProfile): ?>
                                 <div class="row unstyled">
-                                    <a href="./EditPost.php?id=<?= $item['ItemId'] ?>"><button class="btn btn-dark">Edit Post</button></a>
+                                    <a style="width: 100px; margin: auto;" class="btn btn-dark" href="./EditPost.php?id=<?= $item['ItemId'] ?>">Edit Post</a>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -182,7 +186,7 @@
                                         <?php endif ?>
                                     </div>
                                     <div class="col">
-                                        <a href="./FlagComment.php?from=<?= $comment['Review_User'] ?>&to=<?= $comment['UserId'] ?>"><button class="btn btn-dark">Flag Comment</button></a>
+                                        <a class="btn btn-dark" href="./FlagComment.php?from=<?= $comment['Review_User'] ?>&to=<?= $comment['UserId'] ?>">Flag Comment</a>
                                     </div>
                                 </div>
                             <?php endwhile ?>

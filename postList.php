@@ -42,8 +42,9 @@
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
         <title>
             Smorgasbord Trail - Categories
         </title>
@@ -53,34 +54,38 @@
     <body>
         <div id='wrapper'>
             <?php include('sidebar.php') ?>
-            <ul id="post_list">
+            <ul id="post_list" class="container">
                 <?php if ($isLoggedIn): ?>
-                    <div id="list_nav">
+                    <li id="list_nav" class="row">
                         <?php if ($statement->rowcount() == 0): ?>
                             <h1>Search Returned No Results.</h1>
                         <?php elseif (isset($_GET['Category'])): ?>
                             <h2>Seach Returned <?= $statement->rowcount() ?> Rows</h2>
-                            <a href="./PostList.php?Category=<?= $category ?>"><button>Newest</button></a>
-                            <a href="./PostList.php?Category=<?= $category ?>&Sort=Oldest"><button>Oldest</button></a>
-                            <a href="./PostList.php?Category=<?= $category ?>&Sort=Cheapest"><button>Cheapest</button></a>
-                            <a href="./PostList.php?Category=<?= $category ?>&Sort=Alphabetial"><button>Alphabetical</button></a>
+                            <div>
+                                <a class="btn btn-secondary" href="./PostList.php?Category=<?= $category ?>">Newest</a>
+                                <a class="btn btn-secondary" href="./PostList.php?Category=<?= $category ?>&Sort=Oldest">Oldest</a>
+                                <a class="btn btn-secondary" href="./PostList.php?Category=<?= $category ?>&Sort=Cheapest">Cheapest</a>
+                                <a class="btn btn-secondary" href="./PostList.php?Category=<?= $category ?>&Sort=Alphabetial">Alphabetical</a>
+                            </div>
                             <h2>Sorted By: <?= $sort ?></h2>
                         <?php elseif (isset($_GET['all'])): ?>
                             <h2>Seach Returned <?= $statement->rowcount() ?> Rows</h2>
-                            <a href="./PostList.php?all"><button>Newest</button></a>
-                            <a href="./PostList.php?all&Sort=Oldest"><button>Oldest</button></a>
-                            <a href="./PostList.php?all&Sort=Cheapest"><button>Cheapest</button></a>
-                            <a href="./PostList.php?all&Sort=Alphabetical"><button>Alphabetical</button></a>
+                            <div>
+                                <a class="btn btn-secondary" href="./PostList.php?all">Newest</a>
+                                <a class="btn btn-secondary" href="./PostList.php?all&Sort=Oldest">Oldest</a>
+                                <a class="btn btn-secondary" href="./PostList.php?all&Sort=Cheapest">Cheapest</a>
+                                <a class="btn btn-secondary" href="./PostList.php?all&Sort=Alphabetical">Alphabetical</a>
+                            </div>
                             <h2>Sorted By: <?= $sort ?></h2>
                         <?php endif ?>    
-                    </div>
+                        </li>
                 <?php endif; ?>
-                <div class="container">
-                    <?php while ($post = $statement->fetch()): ?>
+                <?php while ($post = $statement->fetch()): ?>
+                    <li>
                         <a href="/Smorgasbord-Trail/SinglePost.php?id=<?= $post['ItemId'] ?>">
                             <div class="row">
                                 <?php if (isset($post['Image'])): ?>
-                                    <div class="col"><div class="list-image-box"><img src="<?= str_replace("Base", "Thumbnail", ".".substr($post['Image'], strpos($post['Image'], "images") - 1)) ?>"></div></div>
+                                    <div class="col"><div class="list-image-box"><img alt="Post Image" src="<?= str_replace("Base", "Thumbnail", ".".substr($post['Image'], strpos($post['Image'], "images") - 1)) ?>"></div></div>
                                 <?php else: ?>
                                     <div class="col"></div>
                                 <?php endif ?>
@@ -97,8 +102,8 @@
                                 <div class="col"><p class="display-5"><?= "$".$post['Price'] ?></p></div>
                             </div>
                         </a>
-                    <?php endwhile ?>
-                </div>
+                    </li>
+                <?php endwhile ?>
             </ul>
         </div>
     </body>

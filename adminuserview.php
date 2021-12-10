@@ -32,9 +32,10 @@
     }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>Smorgasbord Trail - Users</title>
+        <meta charset="UTF-8">
+        <title>Moderation - Users</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="./main.css">
     </head>
@@ -47,6 +48,7 @@
                 <?php endif ?>
                 <div class="row unstyled">
                     <p class="display-6">All Registered Users (Newest to Oldest)</p>
+                    <a class="btn btn-dark" href="./Register.php?AdminRD">Create New User</a>
                 </div>
                 <div class="row">
                     <table class="table table-striped">
@@ -60,12 +62,12 @@
                         </tr>
                         <?php while ($user = $statement->fetch()): ?>
                             <tr>
-                                <td scope="col"><?= $user['UserId']?></td>
-                                <td scope="col"><a href="viewUser.php?id=<?=$user['UserId']?>"><p class="h5"><?= $user['Username'] ?></p></a></td>
-                                <td scope="col"><?= $user['Title']?></td>
-                                <td scope="col"><?= $user['Email'] ?></td>
-                                <td scope="col"><a class="btn btn-primary" href="./EditProfile.php?id=<?= $user['UserId'] ?>">Edit</a></td>
-                                <td scope="col"><a class="btn btn-dark" href="./AdminUserView.php?Delete&id=<?= $user['UserId'] ?>" onclick="return confirm('Are you sure you wish to delete this user?')">Delete</a></td>
+                                <td><?= $user['UserId']?></td>
+                                <td><a href="viewUser.php?id=<?=$user['UserId']?>"><p class="h5"><?= $user['Username'] ?></p></a></td>
+                                <td><?= $user['Title']?></td>
+                                <td><?= $user['Email'] ?></td>
+                                <td><a class="btn btn-primary" href="./EditProfile.php?id=<?= $user['UserId'] ?>">Edit</a></td>
+                                <td><a class="btn btn-dark" href="./AdminUserView.php?Delete&id=<?= $user['UserId'] ?>" onclick="return confirm('Are you sure you wish to delete this user?')">Delete</a></td>
                             </tr>      
                         <?php endwhile ?>
                     </table>

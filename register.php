@@ -3,7 +3,9 @@
     require("DBconnect.php");
     require __DIR__.'/vendor/autoload.php';
 
-    if (isset($_SESSION['userId'])) {
+    $admin = isset($_GET['AdminRD']);
+
+    if (isset($_SESSION['userId']) && !isset($_GET['AdminRD'])) {
         header("Location: viewUser.php");
     }
 
@@ -38,7 +40,7 @@
                 $statement = $db->prepare($query);
                 $statement->execute($values);
 
-                header('Location: index.php?Registered');
+                header($admin ? "Location: AdminUserView.php" : "Location: Index.php?Registered");
             } else {
                 $error_flag = true;
                 $error_message = "Your Passwords do not match, Please Try Again";
@@ -47,8 +49,9 @@
     }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
         <title>Smorgasbord Trail - Register</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="./main.css">
@@ -63,7 +66,7 @@
                 <div class="row unstyled">
                         <p class="display-5">Register</p>
                 </div>
-                <form class="row" action="register.php" method="post">    
+                <form class="row" action="register.php<?= $admin ? "?AdminRD" : "" ?>" method="post">    
                     <ul id="registration_form">
                         <li>
                             <label for="username">Username:</label>

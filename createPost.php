@@ -113,7 +113,6 @@
             }
         }
 
-        //4.3 sanitized POST
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $title = $post['title'];
@@ -183,8 +182,9 @@
     $statement->execute();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
         <title>Smorgasbord Trail - Post</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="./main.css">
@@ -192,52 +192,53 @@
     <body>
         <div id="wrapper">
             <?php include("sidebar.php")?>
-            <form action="createPost.php" enctype='multipart/form-data' method="POST" id="create">
-                <ul id="createList">
-                    <?php if ($_POST): ?>
-                        <?php if ($error_flag): ?>
-                            <li><h3 id="error_message"><?= $error_message ?></h3></li>
+            <div class="container">
+                <form class="row" action="createPost.php" enctype='multipart/form-data' method="POST" id="create">
+                    <ul id="createList">
+                        <?php if ($_POST): ?>
+                            <?php if ($error_flag): ?>
+                                <li><h3 id="error_message"><?= $error_message ?></h3></li>
+                            <?php endif ?>
                         <?php endif ?>
-                    <?php endif ?>
-                    <li>
-                        <label for="image">Image:</label>
-                        <input type="file" id="image" name="image">
-                    </li>
-                    <li>
-                        <label for="title">Title:</label>
-                        <input type="text" id="title" name="title">
-                    </li>
-                    <li>
-                        <label for="description">Description:</label>
-                        <textarea name="description" id="description" cols="50" rows="5"></textarea>
-                    </li>
-                    <li>
-                        <Label for="category">Category:</Label>
-                        <select name="category" id="category">
-                            <option value=''> -- None --</option>
-                        <?php while ($row = $statement->fetch()): ?>
-                            <option value="<?= $row[0] ?>"><?= $row[1] ?></option>
-                        <?php endwhile ?>
-                        </select>
-                    </li>
-                    <li>
-                        <label for="price">Price:</label>
-                        <input type="text" id="price" name="price" placeholder=" Ex: 50">
-                    </li>
-                    <li>
-                        <label for="location">Location:</label>
-                        <input type="text" id="location" name="location" placeholder="Ex: 555 Sample St, Winnipeg">
-                    </li>
-                    <li>
-                        <label for="location_toggle">Hide Location:</label>
-                        <input type="checkbox" id="check" name="check" value="hideLocation">
-                    </li>
-                    <li>
-                        <input type="submit" value="Post Listing">
-                    </li>
-                </ul>
-            </form>
-            <?php include("footer.php")?>
-        </div> <!-- Close Wrapper div -->
+                        <li>
+                            <label for="image">Image:</label>
+                            <input class="form-control" type="file" id="image" name="image">
+                        </li>
+                        <li>
+                            <label for="title">Title:</label>
+                            <input class="form-control" type="text" id="title" name="title">
+                        </li>
+                        <li>
+                            <label for="description">Description:</label>
+                            <textarea class="form-control" name="description" id="description" cols="50" rows="5"></textarea>
+                        </li>
+                        <li>
+                            <Label for="category">Category:</Label>
+                            <select class="form-select" name="category" id="category">
+                                <option value=''> -- None --</option>
+                            <?php while ($row = $statement->fetch()): ?>
+                                <option value="<?= $row[0] ?>"><?= $row[1] ?></option>
+                            <?php endwhile ?>
+                            </select>
+                        </li>
+                        <li>
+                            <label for="price">Price:</label>
+                            <input class="form-control" type="text" id="price" name="price" placeholder=" Ex: 50">
+                        </li>
+                        <li>
+                            <label for="location">Location:</label>
+                            <input class="form-control" type="text" id="location" name="location" placeholder="Ex: 555 Sample St, Winnipeg">
+                        </li>
+                        <li>
+                            <label for="check">Hide Location:</label>
+                            <input class="form-checkbox" type="checkbox" id="check" name="check" value="hideLocation">
+                        </li>
+                        <li>
+                            <input class="btn btn-primary" type="submit" value="Post Listing">
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
     </body>
 </html>
