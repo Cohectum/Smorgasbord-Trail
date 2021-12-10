@@ -25,7 +25,8 @@
         }
     }
 
-    if (isset($_GET['Category'])) {
+    //4.2
+    if (isset($_GET['Category']) && filter_input(INPUT_GET, "Category", FILTER_VALIDATE_INT)) {
         $query = "SELECT * FROM items WHERE ItemId IN (SELECT ItemId FROM itemcategories WHERE CategoryID = {$get['Category']}) ".$orderStatement;
         $statement = $db->prepare($query);
         $statement->execute();

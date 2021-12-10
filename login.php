@@ -9,6 +9,8 @@
     require("DBconnect.php");
     $error_flag = false;
     $error_message = "";
+
+    //4.3
     $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     if (isset($_SESSION['userId'])) {

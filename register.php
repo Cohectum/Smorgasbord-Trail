@@ -12,6 +12,7 @@
     $error_flag = false;
     $error_message = "";
 
+    //4.3
     $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     if ($post && $post['submit'] == "Register") {
@@ -31,9 +32,28 @@
             $password = $post['password'];
             $confirmation = $post['password_confirmation'];
 
+            //4.1
+            if (strlen($username) > 100) {
+                $error_flag = true;
+                $error_message = "Username is too long, max size is 100 characters";
+            }
 
+            if (strlen($email) > 255) {
+                $error_flag = true;
+                $error_message = "Email is too long, max size is 255 characters";
+            }
 
-            if ($password === $confirmation) {
+            if (strlen($password) < 8) {
+                $error_flag = true;
+                $error_message = "Password must be at least 8 characters";
+            }
+
+            if (strlen($password) > 255) {
+                $error_flag = true;
+                $error_message = "Password too long, max length is 255 characters";
+            }
+
+            if ($password === $confirmation && !$error_flag) {
                 $query = "INSERT INTO users (Username, Email, Password) VALUES (:username, :email, :password)";
                 //7.3 Passwords are hashed and salted
                 $values = [":username" => $username, ":email" => $email, ":password" => password_hash($password, PASSWORD_DEFAULT)];
@@ -64,7 +84,7 @@
                     <h3 id="error_message"><?= $error_message ?></h3>
                 <?php endif ?>
                 <div class="row unstyled">
-                        <p class="display-5">Register</p>
+                        <p class="display-5"><?= $admin ? "Add User" : "Register" ?></p>
                 </div>
                 <form class="row" action="register.php<?= $admin ? "?AdminRD" : "" ?>" method="post">    
                     <ul id="registration_form">

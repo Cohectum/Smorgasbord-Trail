@@ -10,6 +10,7 @@
     $error_flag = false;
     $error_message = "";
 
+    //4.2
     $get = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
     $selfProfile = false;
@@ -28,6 +29,8 @@
     $selfProfile = $userSearch == $_SESSION['userId'];
 
     if ($_POST && !$selfProfile && $reviewDoesntExist) {
+
+        //4.3
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         if (filter_var($post['rating'], FILTER_VALIDATE_INT, ["options" => ["min_range" => 0, "max_range" => 5]])) {
@@ -73,7 +76,7 @@
     $statement->execute();
     $user = $statement->fetch();
 
-    $itemQuery = "SELECT * FROM items WHERE UserId = {$userSearch}";
+    $itemQuery = "SELECT * FROM items WHERE UserId = {$userSearch} ORDER BY Created_on DESC";
     $itemStatement = $db->prepare($itemQuery);
     $itemStatement->execute();
 

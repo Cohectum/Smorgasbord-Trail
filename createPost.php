@@ -113,6 +113,7 @@
             }
         }
 
+        //4.3
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $title = $post['title'];
@@ -125,22 +126,48 @@
             $location = null;
         }
 
-
-        if (!filter_var($price, FILTER_VALIDATE_FLOAT)) {
-            preg_replace("/[^0-9.]/", "", $price);
-            if (!filter_var($price, FILTER_VALIDATE_FLOAT)) {
-                $error_flag = true;
-                $error_message = "Price is Invalid";
+        // 4.1 VALIDATION CHECKS
+            //Checks if location should be hidden
+            if (!isset($post['check'])) {
+                $location = $post['location'];
+            } else {
+                $location = null;
             }
-        }
 
-        if (empty($title) ||
-            empty($content) ||
-            ctype_space($title) ||
-            ctype_space($content)) {
-            $error_flag = true;
-            $error_message = "Title and Description must have at least one character.";
-        }
+            //Checks for valid price
+            if (!filter_var($price, FILTER_VALIDATE_FLOAT)) {
+                preg_replace("/[^0-9.]/", "", $price);
+                if (!filter_var($price, FILTER_VALIDATE_FLOAT)) {
+                    $error_flag = true;
+                    $error_message = "Price is Invalid";
+                }
+
+                if ($price > 10000) {
+                    $error_flag = true;
+                    $error_message = "Max listing price is $10000";
+                }
+            }
+
+            //Checks for empty title or content
+            if (empty($title) ||
+                empty($content) ||
+                ctype_space($title) ||
+                ctype_space($content)) {
+                $error_flag = true;
+                $error_message = "Title and Description must have at least one character.";
+            }
+
+            //Checks for oversize title
+            if (strlen($title) > 255){
+                $error_flag = true;
+                $error_message = "Title is too long, max length is 255 characters.";
+            }
+    
+            //Checks for oversize content
+            if (strlen($content) > 2000){
+                $error_flag = true;
+                $error_message = "Content is too long, max length is 2000 characters.";
+            }
 
         if (!$error_flag) {
             $query = "INSERT INTO items (UserId, Title, Description, Price, Location, Image) VALUES (:userid, :title, :description, :price, :location, :image)";
@@ -173,7 +200,7 @@
                 $item_category_statement->execute();
             }
 
-            header('Location: index.php');
+            header('Location: ViewUser.php');
         }
     }
 

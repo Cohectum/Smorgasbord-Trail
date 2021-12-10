@@ -10,6 +10,7 @@
         header("Location: Index.php?404");
     }
 
+    // 4.2
     $get = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
     if ($_SESSION['title'] != "Admin" && $get != $_SESSION['userId']) {
@@ -39,6 +40,8 @@
 
     if (isset($_POST['submit'])) {
         if ($_POST['submit'] == "Update") {
+            
+            //4.3
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     
             if ($post['username'] != $user['Username']) {
@@ -61,8 +64,6 @@
                 $error_flag = true;
                 $error_message = "That Email is too long! max is 255 characters";
             }
-
-
     
             if(!$error_flag){
                 $updateQuery = "UPDATE users SET Username = :username, Email = :email WHERE UserId = {$get}";

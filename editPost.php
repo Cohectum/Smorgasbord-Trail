@@ -122,6 +122,7 @@
             $content = $post['description'];
             $price = $post['price'];
 
+            // 4.1 VALIDATION CHECKS
             //Checks if location should be hidden
             if (!isset($post['check'])) {
                 $location = $post['location'];
@@ -136,6 +137,11 @@
                     $error_flag = true;
                     $error_message = "Price is Invalid";
                 }
+
+                if ($price > 10000) {
+                    $error_flag = true;
+                    $error_message = "Max listing price is $10000";
+                }
             }
 
             //Checks for empty title or content
@@ -145,6 +151,18 @@
                 ctype_space($content)) {
                 $error_flag = true;
                 $error_message = "Title and Description must have at least one character.";
+            }
+
+            //Checks for oversize title
+            if (strlen($title) > 255){
+                $error_flag = true;
+                $error_message = "Title is too long, max length is 255 characters.";
+            }
+    
+            //Checks for oversize content
+            if (strlen($content) > 2000){
+                $error_flag = true;
+                $error_message = "Content is too long, max length is 2000 characters.";
             }
 
             if (!$error_flag) {
@@ -230,7 +248,7 @@
         }
     }
 
-
+    //4.2 id validation
     if (isset($_GET['id']) && filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
         $query = "SELECT * FROM items WHERE ItemId = {$id}";
         $statement = $db->prepare($query);
@@ -256,10 +274,6 @@
     } else {
         header('Location: index.php?404');
     }
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

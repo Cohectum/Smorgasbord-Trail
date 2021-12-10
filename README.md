@@ -18,8 +18,8 @@ Milestone 1 - COMPLETE
 
 Milestone 2 - COMPLETE
 
-Milestone 3 - PENDING
+Milestone 3 - COMPLETE
 
-Milestone 4 - NOT COMPLETE
+Milestone 4 - COMPLETE
 
-Project Submission - NOT COMPLETE
+Project Submission - PENDING

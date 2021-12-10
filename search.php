@@ -4,6 +4,8 @@
     session_start();
 
     if (isset($_GET) && !empty($_GET['term']) && !ctype_space($_GET['term'])) {
+        
+        //4.3
         $term = filter_input(INPUT_GET, "term", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $searchQuery = "SELECT * FROM items WHERE Title LIKE '%{$term}%'";
