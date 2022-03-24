@@ -22,4 +22,4 @@ Milestone 3 - COMPLETE
 
 Milestone 4 - COMPLETE
 
-Project Submission - PENDING
+Project Submission - COMPLETE
